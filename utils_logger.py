@@ -9,6 +9,9 @@ Logging is an essential way to track events and issues during execution.
 Features:
 - Logs information, warnings, and errors to a designated log file.
 - Ensures the log directory exists.
+
+THIS LOGGER SHOULD WORK WITHOUT NEEDING MODIFICATION.
+Just put a copy in your root project folder and import in your scripts as shown in the examples.
 """
 
 # Imports from Python Standard Library
