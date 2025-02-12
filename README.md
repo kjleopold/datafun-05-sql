@@ -26,6 +26,7 @@ Module 5 Project
 * Edit and customize README.md for overview of project and instructions for running it.
 
 #### Git add-commit-push
+* Push changes to GitHub.
     ```
     git add .
     git commit -m "Add meaningful comment."
