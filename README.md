@@ -1,5 +1,6 @@
 # datafun-05-sql
 Module 5 Project  
+*Update README.md as the project progresses.*  
 
 ## Start a New Project
 1. Create repo in GitHub with a README.md.
@@ -25,8 +26,26 @@ Module 5 Project
 * Edit and customize README.md for overview of project and instructions for running it.
 
 #### Git add-commit-push
-```
-git add .
-git commit -m "Add meaningful comment."
-git push
-```
+    ```
+    git add .
+    git commit -m "Add meaningful comment."
+    git push
+    ```
+
+## Set Up Virtual Environment
+1. Create virtual environment.
+    ```
+    py -m venv .venv
+    ```
+2. Activate virtual environment.
+    ```
+    .venv\Scripts\activate
+    ```
+3. Install dependencies with requirements.txt.
+    ```
+    py -m pip install --upgrade pip setuptools wheel
+    py -m pip install --upgrade -r requirements.txt
+    ```
+4. Ctrl + Shift + P
+5. Search for Python: Select Interpreter.
+6. Select local .venv.
