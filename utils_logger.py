@@ -1,7 +1,6 @@
 """
 Logger Setup Script
 File: utils_logger.py
-USE AS IS - YOU DO NOT NEED TO UNDERSTAND OR MODIFY THIS FILE
 
 This script provides logging functions for the project. 
 Logging is an essential way to track events and issues during execution. 
