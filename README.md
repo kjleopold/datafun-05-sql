@@ -1,6 +1,6 @@
 # datafun-05-sql
 Module 5 Project  
-*Update README.md as the project progresses.*  
+*This project is in its initial stages and this README.md will be updated as progress is made.*
 
 ## Start a New Project
 1. Create repo in GitHub with a README.md.
