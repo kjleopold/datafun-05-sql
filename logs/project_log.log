@@ -52,3 +52,26 @@
 2025-02-11 22:46:51.713 | INFO     | __main__:main:52 - Connected to database: C:\Projects\datafun-05-sql\data\db.sqlite
 2025-02-11 22:46:51.714 | INFO     | __main__:main:58 - Feature queries execution completed successfully.
 2025-02-11 22:46:51.714 | INFO     | __main__:main:63 - Database connection closed.
+2025-02-12 17:52:40.681 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-12 17:52:40.682 | INFO     | __main__:main:38 - Starting database setup...
+2025-02-12 17:52:40.684 | INFO     | __main__:main:52 - Connected to database: C:\Projects\datafun-05-sql\data\db.sqlite
+2025-02-12 17:52:40.689 | INFO     | __main__:execute_sql_file:30 - Executed: C:\Projects\datafun-05-sql\sql_create\01_drop_tables.sql
+2025-02-12 17:52:40.692 | INFO     | __main__:execute_sql_file:30 - Executed: C:\Projects\datafun-05-sql\sql_create\02_create_tables.sql
+2025-02-12 17:52:40.694 | INFO     | __main__:execute_sql_file:30 - Executed: C:\Projects\datafun-05-sql\sql_create\03_insert_records.sql
+2025-02-12 17:52:40.694 | INFO     | __main__:main:60 - Database setup completed successfully.
+2025-02-12 17:52:40.694 | INFO     | __main__:main:65 - Database connection closed.
+2025-02-12 17:52:57.676 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-12 17:52:57.676 | INFO     | __main__:main:36 - Starting feature queries execution...
+2025-02-12 17:52:57.677 | INFO     | __main__:main:52 - Connected to database: C:\Projects\datafun-05-sql\data\db.sqlite
+2025-02-12 17:52:57.679 | INFO     | __main__:execute_sql_file:27 - Executed: C:\Projects\datafun-05-sql\sql_features\delete_records.sql
+2025-02-12 17:52:57.679 | INFO     | __main__:execute_sql_file:27 - Executed: C:\Projects\datafun-05-sql\sql_features\update_records.sql
+2025-02-12 17:52:57.679 | INFO     | __main__:main:58 - Feature queries execution completed successfully.
+2025-02-12 17:52:57.680 | INFO     | __main__:main:63 - Database connection closed.
+2025-02-12 19:26:01.322 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-12 19:26:01.322 | INFO     | __main__:main:38 - Starting database setup...
+2025-02-12 19:26:01.324 | INFO     | __main__:main:52 - Connected to database: C:\Projects\datafun-05-sql\data\db.sqlite
+2025-02-12 19:26:01.328 | INFO     | __main__:execute_sql_file:30 - Executed: C:\Projects\datafun-05-sql\sql_create\01_drop_tables.sql
+2025-02-12 19:26:01.332 | INFO     | __main__:execute_sql_file:30 - Executed: C:\Projects\datafun-05-sql\sql_create\02_create_tables.sql
+2025-02-12 19:26:01.334 | ERROR    | __main__:execute_sql_file:32 - Failed to execute C:\Projects\datafun-05-sql\sql_create\03_insert_records.sql: unrecognized token: "'16f3e0a1-24cb-4ed6-a50"
+2025-02-12 19:26:01.334 | ERROR    | __main__:main:62 - Error during database setup: unrecognized token: "'16f3e0a1-24cb-4ed6-a50"
+2025-02-12 19:26:01.335 | INFO     | __main__:main:65 - Database connection closed.

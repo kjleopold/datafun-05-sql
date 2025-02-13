@@ -1,69 +1,55 @@
-'''
-Use Python to create a new relational database and store it in the data folder. 
-'''
+# Create a Python script that demonstrates the ability to create a database, define a schema, and insert records. Make it easy to re-run by dropping the tables first.
 
-# Imports from Python Standard Library
 import sqlite3
-import os
+import pandas as pd
 import pathlib
 
-# Import local modules
-from utils_logger import logger
+# Define the database file in the current root project directory
+db_file = pathlib.Path("project.sqlite3")
 
-def execute_sql_file(connection, file_path) -> None:
-    """
-    Executes a SQL file using the provided SQLite connection.
-
-    Args:
-        connection (sqlite3.Connection): SQLite connection object.
-        file_path (str): Path to the SQL file to be executed.
-    """
-    # We know reading from a file can raise exceptions, so we wrap it in a try block
-    # For example, the file might not exist, or the file might not be readable
-    try:
-        with open(file_path, 'r') as file:
-            # Read the SQL file into a string
-            sql_script: str = file.read()
-        with connection:
-            # Use the connection as a context manager to execute the SQL script
-            connection.executescript(sql_script)
-            logger.info(f"Executed: {file_path}")
-    except Exception as e:
-        logger.error(f"Failed to execute {file_path}: {e}")
-        raise
-
-def main() -> None:
-
-    # Log start of database setup
-    logger.info("Starting database setup...")
+def create_database():
+    """Function to create a database file"""
     
-    # Define path variables
-    ROOT_DIR = pathlib.Path(__file__).parent.resolve()
-    SQL_CREATE_FOLDER = ROOT_DIR.joinpath("sql_create")
-    DATA_FOLDER = ROOT_DIR.joinpath("data")
-    DB_PATH = DATA_FOLDER.joinpath('db.sqlite')
+    # Drop the Tables if they exist
+    with sqlite3.connect(db_file) as conn:
+            sql_file = pathlib.Path("sql_create", "01_drop_tables.sql")
+            with open(sql_file, "r") as file:
+                sql_script = file.read()
+            conn.executescript(sql_script)
+            print("Tables dropped successfully.")
+    
+    # Create the Tables
+    with sqlite3.connect(db_file) as conn:
+            sql_file = pathlib.Path("sql_create", "02_create_tables.sql")
+            with open(sql_file, "r") as file:
+                sql_script = file.read()
+            conn.executescript(sql_script)
+            print("Tables created successfully.")
 
-    # Ensure the data folder where we will put the db exists
-    DATA_FOLDER.mkdir(exist_ok=True)
-
-    # Connect to SQLite database (it will be created if it doesn't exist)
+def insert_data_from_csv():
+    """Function to use pandas to read data from CSV files (in 'data' folder)
+    and insert the records into their respective tables."""
     try:
-        connection = sqlite3.connect(DB_PATH)
-        logger.info(f"Connected to database: {DB_PATH}")
+        author_data_path = pathlib.Path("data", "authors.csv")
+        book_data_path = pathlib.Path("data", "books.csv")
+        authors_df = pd.read_csv(author_data_path)
+        books_df = pd.read_csv(book_data_path)
+        with sqlite3.connect(db_file) as conn:
+            # use the pandas DataFrame to_sql() method to insert data
+            # pass in the table name and the connection
+            authors_df.to_sql("authors", conn, if_exists="replace", index=False)
+            books_df.to_sql("books", conn, if_exists="replace", index=False)
+            print("Data inserted successfully.")
+    except (sqlite3.Error, pd.errors.EmptyDataError, FileNotFoundError) as e:
+        print("Error inserting data:", e)
 
-        # Execute SQL files to set up the database
-        # Pass in the connection and the path to the SQL file to be executed
-        execute_sql_file(connection, SQL_CREATE_FOLDER.joinpath('01_drop_tables.sql'))
-        execute_sql_file(connection, SQL_CREATE_FOLDER.joinpath('02_create_tables.sql'))
-        execute_sql_file(connection, SQL_CREATE_FOLDER.joinpath('03_insert_records.sql'))
+print("Database created successfully.")
 
-        logger.info("Database setup completed successfully.")
-    except Exception as e:
-        logger.error(f"Error during database setup: {e}")
-    finally:
-        connection.close()
-        logger.info("Database connection closed.")
+def main():
+    create_database()
+    insert_data_from_csv()
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
+
+#TO DO: go look at old utils example from project 3 on how to use the logger. Come back and replace print statements with logger statements. 
