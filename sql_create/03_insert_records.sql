@@ -1,26 +1,42 @@
 -- Insert authors data
 INSERT INTO authors (author_id, first_name, last_name, year_born)
 VALUES
-    ('10f88232-1ae7-4d88-a6a2-dfcebb22a596', 'Harper', 'Lee', NULL),
-    ('c3a47e85-2a6b-4196-a7a8-8b55d8fc1f70', 'George', 'Orwell', NULL),
-    ('e0b75863-866d-4db4-85c7-df9bb8ee6dab', 'F. Scott', 'Fitzgerald', NULL),
-    ('7b144e32-7ff4-4b58-8eb0-e63d3c9f9b8d', 'Aldous', 'Huxley', NULL),
-    ('8d8107b6-1f24-481c-8a21-7d72b13b59b5', 'J.D.', 'Salinger', NULL),
-    ('0cc3c8e4-e0c0-482f-b2f7-af87330de214', 'Ray', 'Bradbury', NULL),
-    ('4dca0632-2c53-490c-99d5-4f6d41e56c0e', 'Jane', 'Austen', NULL),
-    ('16f3e0a1-24cb-4ed6-a50d-509f63e367f7', 'J.R.R.', 'Tolkien', NULL),
-    ('06cf58ab-90f1-448d-8e54-055e4393e75c', 'J.R.R.', 'Tolkien', NULL),
-    ('6b693b96-394a-4a1d-a4e2-792a47d7a568', 'J.K.', 'Rowling', NULL);
+    ('10f88232-1ae7-4d88-a6a2-dfcebb22a596', 'Harper', 'Lee', 1926),
+    ('c3a47e85-2a6b-4196-a7a8-8b55d8fc1f70', 'George', 'Orwell', 1903),
+    ('e0b75863-866d-4db4-85c7-df9bb8ee6dab', 'F. Scott', 'Fitzgerald', 1896),
+    ('7b144e32-7ff4-4b58-8eb0-e63d3c9f9b8d', 'Aldous', 'Huxley', 1894),
+    ('8d8107b6-1f24-481c-8a21-7d72b13b59b5', 'J.D.', 'Salinger', 1919),
+    ('0cc3c8e4-e0c0-482f-b2f7-af87330de214', 'Ray', 'Bradbury', 1920),
+    ('4dca0632-2c53-490c-99d5-4f6d41e56c0e', 'Jane', 'Austen', 1775),
+    ('16f3e0a1-24cb-4ed6-a50d-509f63e367f7', 'J.R.R.', 'Tolkien', 1892),
+    ('06cf58ab-90f1-448d-8e54-055e4393e75c', 'J.R.R.', 'Tolkien', 1892),
+    ('6b693b96-394a-4a1d-a4e2-792a47d7a568', 'J.K.', 'Rowling', 1965),
+    ('9e220224-8436-4190-8ad0-e288980693f7', 'Stephenie', 'Meyer', 1973),
+    ('edd8d71b-80af-4366-a28f-b182df552c91', 'John', 'Saul', 1942);
 
 
 -- Insert books data
-INSERT INTO books (book_id, title, year_published, author_id)
+INSERT INTO books (book_id, title, year_published, author_id, genre)
 VALUES
     ('d6f83870-ff21-4a5d-90ab-26a49ab6ed12', 'To Kill a Mockingbird', 1960, '10f88232-1ae7-4d88-a6a2-dfcebb22a596'),
-    ('0f5f44f7-44d8-4f49-b8c4-c64d847587d3', '1984', 1949, 'c3a47e85-2a6b-4196-a7a8-8b55d8fc1f70'),
     ('f9d9e7de-c44d-4d1d-b3ab-59343bf32bc2', 'The Great Gatsby', 1925, 'e0b75863-866d-4db4-85c7-df9bb8ee6dab'),
     ('38e530f1-228f-4d6e-a587-2ed4d6c44e9c', 'Brave New World', 1932, '7b144e32-7ff4-4b58-8eb0-e63d3c9f9b8d'),
     ('c2a62a4b-cf5c-4246-9bf7-b2601d542e6d', 'The Catcher in the Rye', 1951, '8d8107b6-1f24-481c-8a21-7d72b13b59b5'),
     ('3a1d835c-1e15-4a48-8e8c-b12239604e98', 'Fahrenheit 451', 1953, '0cc3c8e4-e0c0-482f-b2f7-af87330de214'),
     ('c6e67918-e509-4a6b-bc3a-979f6ad802f0', 'Pride and Prejudice', 1813, '4dca0632-2c53-490c-99d5-4f6d41e56c0e'),
-    ('be951205-6cc2-4b3d-96f1-7257b8fc8c0f', 'The Hobbit', 1937, '16f3e0a1-24cb-4ed6-a50');
+    ('be951205-6cc2-4b3d-96f1-7257b8fc8c0f', 'The Hobbit', 1937, '06cf58ab-90f1-448d-8e54-055e4393e75c'),
+    ('dce0f8f2-d3ed-48a9-b8ff-960b6baf1f6f', 'The Lord of the Rings', 1954, '06cf58ab-90f1-448d-8e54-055e4393e75c'),
+    ('ca8e64c3-1e67-47f5-82cc-3e4e30f63b75', "Harry Potter and the Philosopher's Stone", 1997, '6b693b96-394a-4a1d-a4e2-792a47d7a568'),
+    ('df6263e6-b5df-435a-8811-f0992ea4ef74', 'Harry Potter and the Chamber of Secrets', 1998, '6b693b96-394a-4a1d-a4e2-792a47d7a568'),
+    ('cfc38c1b-83da-4242-b724-9c198dd397e6', 'Harry Potter and the Prisoner of Azkaban', 1999, '6b693b96-394a-4a1d-a4e2-792a47d7a568'),
+    ('037f9166-78a9-43ed-8e84-677d5931b3ed', 'Harry Potter and the Goblet of Fire', 2000, '6b693b96-394a-4a1d-a4e2-792a47d7a568'),
+    ('5d6db19a-795b-4a7d-bb63-15423b96d2b9', 'Harry Potter and the Order of the Pheonix', 2003, '6b693b96-394a-4a1d-a4e2-792a47d7a568'),
+    ('2ce2f75c-ea25-447f-a9ad-1a3284a774bd', 'Harry Potter and the Half-Blood Prince', 2005, '6b693b96-394a-4a1d-a4e2-792a47d7a568'),
+    ('38ddc8b8-b8be-450a-9f38-5607c0c39156', 'Harry Potter and the Deathly Hallows', 2007, '6b693b96-394a-4a1d-a4e2-792a47d7a568'),
+    ('f91447c8-e02b-4563-a163-396c37e5dcc1', 'Twilight', 2005, '9e220224-8436-4190-8ad0-e288980693f7'),
+    ('cbb39c2d-d69a-4280-aeb6-00d13d746d3f', 'New Moon', 2006, '9e220224-8436-4190-8ad0-e288980693f7'),
+    ('1f2b6578-d06b-4c90-b44e-f1c212178fd6', 'Eclipse', 2007, '9e220224-8436-4190-8ad0-e288980693f7'),
+    ('955ac168-f76f-441b-8d93-d0e188c79034', 'Breaking Dawn', 2008, '9e220224-8436-4190-8ad0-e288980693f7'),
+    ('629a0c8c-17a1-4ca0-83c2-2bafd1efb958', 'Midnight Sun', 2020, '9e220224-8436-4190-8ad0-e288980693f7'),
+    ('fcdacee2-b612-4e97-9923-2472d5bfbf4f', 'Nightshade', 2000, 'b0fa7d1e-df1f-483f-99a2-87ff0e98ff9f');
+

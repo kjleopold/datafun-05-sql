@@ -75,3 +75,9 @@
 2025-02-12 19:26:01.334 | ERROR    | __main__:execute_sql_file:32 - Failed to execute C:\Projects\datafun-05-sql\sql_create\03_insert_records.sql: unrecognized token: "'16f3e0a1-24cb-4ed6-a50"
 2025-02-12 19:26:01.334 | ERROR    | __main__:main:62 - Error during database setup: unrecognized token: "'16f3e0a1-24cb-4ed6-a50"
 2025-02-12 19:26:01.335 | INFO     | __main__:main:65 - Database connection closed.
+2025-02-18 11:45:40.497 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 11:45:40.497 | INFO     | __main__:main:56 - Database operation started.
+2025-02-18 11:45:40.504 | INFO     | __main__:create_database:20 - Tables dropped successfully.
+2025-02-18 11:45:40.508 | INFO     | __main__:create_database:28 - Tables created successfully.
+2025-02-18 11:45:40.527 | INFO     | __main__:insert_data_from_csv:45 - Data inserted successfully.
+2025-02-18 11:45:40.527 | INFO     | __main__:main:59 - Database operation completed.

@@ -21,7 +21,7 @@ import pandas as pd
 
 # Define paths using joinpath
 db_file_path = pathlib.Path("project.db")
-sql_file_path = pathlib.Path("sql").joinpath("create_tables.sql")
+sql_file_path = pathlib.Path("sql_create").joinpath("02_create_tables.sql")
 author_data_path = pathlib.Path("data").joinpath("authors.csv")
 book_data_path = pathlib.Path("data").joinpath("books.csv")
 
