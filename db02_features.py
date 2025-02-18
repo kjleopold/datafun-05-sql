@@ -20,15 +20,17 @@ def execute_sql_file(connection, file_path) -> None:
         file_path (str): Path to the SQL file to be executed.
     """
     try:
-        with open(file_path, 'r') as file:
+        with open(file_path, 'r', encoding='utf-8') as file:  # Ensure correct encoding
             sql_script: str = file.read()
+
         with connection:
             connection.executescript(sql_script)
             logger.info(f"Executed: {file_path}")
+    except sqlite3.Error as e:
+        logger.error(f"SQLite error in {file_path}: {e}")
     except Exception as e:
         logger.error(f"Failed to execute {file_path}: {e}")
         raise
-
 
 def main() -> None:
 
@@ -38,8 +40,7 @@ def main() -> None:
     # Define path variables
     ROOT_DIR = pathlib.Path(__file__).parent.resolve()
     SQL_FEATURES_FOLDER = ROOT_DIR.joinpath("sql_features")
-    DATA_FOLDER = ROOT_DIR.joinpath("data")
-    DB_PATH = DATA_FOLDER.joinpath('db.sqlite')
+    DB_PATH = ROOT_DIR.joinpath('project.sqlite3')
 
     # Ensure the database file exists before attempting to connect
     if not DB_PATH.exists():

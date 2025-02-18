@@ -81,3 +81,75 @@
 2025-02-18 11:45:40.508 | INFO     | __main__:create_database:28 - Tables created successfully.
 2025-02-18 11:45:40.527 | INFO     | __main__:insert_data_from_csv:45 - Data inserted successfully.
 2025-02-18 11:45:40.527 | INFO     | __main__:main:59 - Database operation completed.
+2025-02-18 12:01:51.694 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 12:01:51.694 | INFO     | __main__:main:36 - Starting feature queries execution...
+2025-02-18 12:01:51.694 | INFO     | __main__:main:52 - Connected to database: C:\Projects\datafun-05-sql\data\db.sqlite
+2025-02-18 12:01:51.704 | INFO     | __main__:execute_sql_file:27 - Executed: C:\Projects\datafun-05-sql\sql_features\delete_records.sql
+2025-02-18 12:01:51.710 | INFO     | __main__:execute_sql_file:27 - Executed: C:\Projects\datafun-05-sql\sql_features\update_records.sql
+2025-02-18 12:01:51.710 | INFO     | __main__:main:58 - Feature queries execution completed successfully.
+2025-02-18 12:01:51.710 | INFO     | __main__:main:63 - Database connection closed.
+2025-02-18 12:02:42.316 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 12:02:42.316 | INFO     | __main__:main:56 - Database operation started.
+2025-02-18 12:02:42.320 | INFO     | __main__:create_database:20 - Tables dropped successfully.
+2025-02-18 12:02:42.325 | INFO     | __main__:create_database:28 - Tables created successfully.
+2025-02-18 12:02:42.340 | INFO     | __main__:insert_data_from_csv:45 - Data inserted successfully.
+2025-02-18 12:02:42.341 | INFO     | __main__:main:59 - Database operation completed.
+2025-02-18 12:10:10.021 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 12:10:10.021 | INFO     | __main__:main:36 - Starting feature queries execution...
+2025-02-18 12:11:30.924 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 12:11:30.924 | INFO     | __main__:main:36 - Starting feature queries execution...
+2025-02-18 12:11:30.924 | INFO     | __main__:main:51 - Connected to database: C:\Projects\datafun-05-sql\project.sqlite3
+2025-02-18 12:11:30.928 | INFO     | __main__:execute_sql_file:27 - Executed: C:\Projects\datafun-05-sql\sql_features\delete_records.sql
+2025-02-18 12:11:30.938 | ERROR    | __main__:execute_sql_file:29 - Failed to execute C:\Projects\datafun-05-sql\sql_features\update_records.sql: table authors has no column named first_name
+2025-02-18 12:11:30.938 | ERROR    | __main__:main:59 - Error during feature queries execution: table authors has no column named first_name
+2025-02-18 12:11:30.938 | INFO     | __main__:main:62 - Database connection closed.
+2025-02-18 12:12:28.287 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 12:12:28.287 | INFO     | __main__:main:38 - Starting feature queries execution...
+2025-02-18 12:12:28.288 | INFO     | __main__:main:53 - Connected to database: C:\Projects\datafun-05-sql\project.sqlite3
+2025-02-18 12:12:28.289 | INFO     | __main__:execute_sql_file:28 - Executed: C:\Projects\datafun-05-sql\sql_features\delete_records.sql
+2025-02-18 12:12:28.289 | ERROR    | __main__:execute_sql_file:30 - SQLite error in C:\Projects\datafun-05-sql\sql_features\update_records.sql: duplicate column name: genre
+2025-02-18 12:12:28.289 | INFO     | __main__:main:59 - Feature queries execution completed successfully.
+2025-02-18 12:12:28.289 | INFO     | __main__:main:64 - Database connection closed.
+2025-02-18 12:18:16.659 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 12:18:16.659 | INFO     | __main__:main:56 - Database operation started.
+2025-02-18 12:18:16.663 | INFO     | __main__:create_database:20 - Tables dropped successfully.
+2025-02-18 12:18:16.668 | INFO     | __main__:create_database:28 - Tables created successfully.
+2025-02-18 12:18:16.683 | INFO     | __main__:insert_data_from_csv:45 - Data inserted successfully.
+2025-02-18 12:18:16.683 | INFO     | __main__:main:59 - Database operation completed.
+2025-02-18 12:42:02.470 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 12:42:02.470 | INFO     | __main__:main:38 - Starting feature queries execution...
+2025-02-18 12:42:02.471 | INFO     | __main__:main:53 - Connected to database: C:\Projects\datafun-05-sql\project.sqlite3
+2025-02-18 12:42:02.474 | INFO     | __main__:execute_sql_file:28 - Executed: C:\Projects\datafun-05-sql\sql_features\delete_records.sql
+2025-02-18 12:42:02.477 | ERROR    | __main__:execute_sql_file:30 - SQLite error in C:\Projects\datafun-05-sql\sql_features\update_records.sql: table authors has no column named first_name
+2025-02-18 12:42:02.477 | INFO     | __main__:main:59 - Feature queries execution completed successfully.
+2025-02-18 12:42:02.477 | INFO     | __main__:main:64 - Database connection closed.
+2025-02-18 12:43:26.902 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 12:43:26.902 | INFO     | __main__:main:56 - Database operation started.
+2025-02-18 12:43:26.906 | INFO     | __main__:create_database:20 - Tables dropped successfully.
+2025-02-18 12:43:26.911 | INFO     | __main__:create_database:28 - Tables created successfully.
+2025-02-18 12:43:26.931 | INFO     | __main__:insert_data_from_csv:45 - Data inserted successfully.
+2025-02-18 12:43:26.931 | INFO     | __main__:main:59 - Database operation completed.
+2025-02-18 12:45:03.966 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 12:45:03.967 | INFO     | __main__:main:38 - Starting feature queries execution...
+2025-02-18 12:45:03.967 | INFO     | __main__:main:53 - Connected to database: C:\Projects\datafun-05-sql\project.sqlite3
+2025-02-18 12:45:03.971 | INFO     | __main__:execute_sql_file:28 - Executed: C:\Projects\datafun-05-sql\sql_features\delete_records.sql
+2025-02-18 12:45:03.972 | ERROR    | __main__:execute_sql_file:30 - SQLite error in C:\Projects\datafun-05-sql\sql_features\update_records.sql: table authors has no column named year_born
+2025-02-18 12:45:03.973 | INFO     | __main__:main:59 - Feature queries execution completed successfully.
+2025-02-18 12:45:03.973 | INFO     | __main__:main:64 - Database connection closed.
+2025-02-18 12:50:41.217 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 12:50:41.217 | INFO     | __main__:main:49 - Database operation started.
+2025-02-18 12:50:41.221 | INFO     | __main__:create_database:20 - Tables dropped successfully.
+2025-02-18 12:50:41.226 | INFO     | __main__:create_database:28 - Tables created successfully.
+2025-02-18 12:51:12.833 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 12:51:12.834 | INFO     | __main__:main:49 - Database operation started.
+2025-02-18 12:51:12.838 | INFO     | __main__:create_database:20 - Tables dropped successfully.
+2025-02-18 12:51:12.843 | INFO     | __main__:create_database:28 - Tables created successfully.
+2025-02-18 12:51:12.852 | INFO     | __main__:insert_data:40 - Data inserted successfully.
+2025-02-18 12:51:12.852 | INFO     | __main__:main:52 - Database operation completed.
+2025-02-18 12:51:36.590 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 12:51:36.590 | INFO     | __main__:main:38 - Starting feature queries execution...
+2025-02-18 12:51:36.590 | INFO     | __main__:main:53 - Connected to database: C:\Projects\datafun-05-sql\project.sqlite3
+2025-02-18 12:51:36.595 | INFO     | __main__:execute_sql_file:28 - Executed: C:\Projects\datafun-05-sql\sql_features\delete_records.sql
+2025-02-18 12:51:36.604 | INFO     | __main__:execute_sql_file:28 - Executed: C:\Projects\datafun-05-sql\sql_features\update_records.sql
+2025-02-18 12:51:36.604 | INFO     | __main__:main:59 - Feature queries execution completed successfully.
+2025-02-18 12:51:36.605 | INFO     | __main__:main:64 - Database connection closed.

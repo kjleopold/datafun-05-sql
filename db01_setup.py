@@ -29,24 +29,17 @@ def create_database():
     except sqlite3.Error as e:
         logger.error(f"Database creation failed: {e}")
 
-def insert_data_from_csv():
-    """Function to use pandas to read data from CSV files (in 'data' folder)
-    and insert the records into their respective tables."""
+def insert_data():
+    """Function to insert data from SQL files"""
     try:
-        author_data_path = pathlib.Path("data", "authors.csv")
-        book_data_path = pathlib.Path("data", "books.csv")
-        authors_df = pd.read_csv(author_data_path)
-        books_df = pd.read_csv(book_data_path)
         with sqlite3.connect(db_file) as conn:
-            # use the pandas DataFrame to_sql() method to insert data
-            # pass in the table name and the connection
-            authors_df.to_sql("authors", conn, if_exists="replace", index=False)
-            books_df.to_sql("books", conn, if_exists="replace", index=False)
-        logger.info("Data inserted successfully.")
+            sql_file = pathlib.Path("sql_create", "03_insert_records.sql")
+            with open(sql_file, "r") as file:
+                sql_script = file.read()
+            conn.executescript(sql_script)
+            logger.info("Data inserted successfully.")
     except FileNotFoundError as e:
         logger.error(f"File not found: {e}")
-    except pd.errors.EmptyDataError as e:
-        logger.error(f"CSV file is empty: {e}")
     except sqlite3.Error as e:
         logger.error(f"Database error: {e}")
 
@@ -55,7 +48,7 @@ print("Database created successfully.")
 def main():
     logger.info("Database operation started.")
     create_database()
-    insert_data_from_csv()
+    insert_data()
     logger.info("Database operation completed.")
 
 if __name__ == "__main__":
