@@ -153,3 +153,49 @@
 2025-02-18 12:51:36.604 | INFO     | __main__:execute_sql_file:28 - Executed: C:\Projects\datafun-05-sql\sql_features\update_records.sql
 2025-02-18 12:51:36.604 | INFO     | __main__:main:59 - Feature queries execution completed successfully.
 2025-02-18 12:51:36.605 | INFO     | __main__:main:64 - Database connection closed.
+2025-02-18 13:01:02.148 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 13:01:02.149 | INFO     | __main__:main:38 - Starting feature queries execution...
+2025-02-18 13:01:02.149 | INFO     | __main__:main:53 - Connected to database: C:\Projects\datafun-05-sql\project.sqlite3
+2025-02-18 13:01:02.150 | INFO     | __main__:execute_sql_file:28 - Executed: C:\Projects\datafun-05-sql\sql_features\delete_records.sql
+2025-02-18 13:01:02.156 | ERROR    | __main__:execute_sql_file:30 - SQLite error in C:\Projects\datafun-05-sql\sql_features\update_records.sql: duplicate column name: genre
+2025-02-18 13:01:02.157 | INFO     | __main__:main:59 - Feature queries execution completed successfully.
+2025-02-18 13:01:02.157 | INFO     | __main__:main:64 - Database connection closed.
+2025-02-18 13:03:05.182 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 13:03:05.182 | INFO     | __main__:main:49 - Database operation started.
+2025-02-18 13:03:05.186 | INFO     | __main__:create_database:20 - Tables dropped successfully.
+2025-02-18 13:03:05.190 | INFO     | __main__:create_database:28 - Tables created successfully.
+2025-02-18 13:03:05.195 | INFO     | __main__:insert_data:40 - Data inserted successfully.
+2025-02-18 13:03:05.195 | INFO     | __main__:main:52 - Database operation completed.
+2025-02-18 13:03:30.875 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 13:03:30.875 | INFO     | __main__:main:38 - Starting feature queries execution...
+2025-02-18 13:03:30.876 | INFO     | __main__:main:53 - Connected to database: C:\Projects\datafun-05-sql\project.sqlite3
+2025-02-18 13:03:30.879 | INFO     | __main__:execute_sql_file:28 - Executed: C:\Projects\datafun-05-sql\sql_features\delete_records.sql
+2025-02-18 13:03:30.899 | INFO     | __main__:execute_sql_file:28 - Executed: C:\Projects\datafun-05-sql\sql_features\update_records.sql
+2025-02-18 13:03:30.900 | INFO     | __main__:main:59 - Feature queries execution completed successfully.
+2025-02-18 13:03:30.900 | INFO     | __main__:main:64 - Database connection closed.
+2025-02-18 13:06:27.780 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 13:06:27.780 | INFO     | __main__:main:49 - Database operation started.
+2025-02-18 13:06:27.785 | INFO     | __main__:create_database:20 - Tables dropped successfully.
+2025-02-18 13:06:27.790 | INFO     | __main__:create_database:28 - Tables created successfully.
+2025-02-18 13:06:27.794 | INFO     | __main__:insert_data:40 - Data inserted successfully.
+2025-02-18 13:06:27.794 | INFO     | __main__:main:52 - Database operation completed.
+2025-02-18 13:06:34.176 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 13:06:34.176 | INFO     | __main__:main:38 - Starting feature queries execution...
+2025-02-18 13:06:34.177 | INFO     | __main__:main:53 - Connected to database: C:\Projects\datafun-05-sql\project.sqlite3
+2025-02-18 13:06:34.181 | INFO     | __main__:execute_sql_file:28 - Executed: C:\Projects\datafun-05-sql\sql_features\delete_records.sql
+2025-02-18 13:06:34.207 | INFO     | __main__:execute_sql_file:28 - Executed: C:\Projects\datafun-05-sql\sql_features\update_records.sql
+2025-02-18 13:06:34.207 | INFO     | __main__:main:59 - Feature queries execution completed successfully.
+2025-02-18 13:06:34.207 | INFO     | __main__:main:64 - Database connection closed.
+2025-02-18 13:07:48.991 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 13:07:48.991 | INFO     | __main__:main:49 - Database operation started.
+2025-02-18 13:07:48.995 | INFO     | __main__:create_database:20 - Tables dropped successfully.
+2025-02-18 13:07:49.000 | INFO     | __main__:create_database:28 - Tables created successfully.
+2025-02-18 13:07:49.004 | INFO     | __main__:insert_data:40 - Data inserted successfully.
+2025-02-18 13:07:49.004 | INFO     | __main__:main:52 - Database operation completed.
+2025-02-18 13:07:55.657 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 13:07:55.657 | INFO     | __main__:main:38 - Starting feature queries execution...
+2025-02-18 13:07:55.659 | INFO     | __main__:main:53 - Connected to database: C:\Projects\datafun-05-sql\project.sqlite3
+2025-02-18 13:07:55.669 | INFO     | __main__:execute_sql_file:28 - Executed: C:\Projects\datafun-05-sql\sql_features\delete_records.sql
+2025-02-18 13:07:55.688 | INFO     | __main__:execute_sql_file:28 - Executed: C:\Projects\datafun-05-sql\sql_features\update_records.sql
+2025-02-18 13:07:55.689 | INFO     | __main__:main:59 - Feature queries execution completed successfully.
+2025-02-18 13:07:55.689 | INFO     | __main__:main:64 - Database connection closed.

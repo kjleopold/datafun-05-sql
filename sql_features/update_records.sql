@@ -40,7 +40,29 @@ Update books
 SET genre = "Fantasy"
 WHERE author_id = "06cf58ab-90f1-448d-8e54-055e4393e75c";
 
+Update books
+SET genre = "Distopian"
+WHERE author_id = "7b144e32-7ff4-4b58-8eb0-e63d3c9f9b8d";
 
+Update books
+SET genre = "Tragedy"
+WHERE author_id = "e0b75863-866d-4db4-85c7-df9bb8ee6dab";
+
+Update books
+SET genre = "Southern Gothic"
+WHERE author_id = "10f88232-1ae7-4d88-a6a2-dfcebb22a596";
+
+Update books
+SET genre = "Coming-of-age"
+WHERE author_id = "8d8107b6-1f24-481c-8a21-7d72b13b59b5";
+
+Update books
+SET genre = "Distopian"
+WHERE author_id = "0cc3c8e4-e0c0-482f-b2f7-af87330de214";
+
+Update books
+SET genre = "Romance"
+WHERE author_id = "4dca0632-2c53-490c-99d5-4f6d41e56c0e";
 
 -- Update the author ID of a book
 UPDATE books
