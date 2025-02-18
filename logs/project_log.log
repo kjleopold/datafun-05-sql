@@ -2604,3 +2604,1968 @@ ORDER BY a.last_name ASC
 18                                 The Hobbit     J.R.R.     Tolkien
 19                      The Lord of the Rings     J.R.R.     Tolkien
 
+2025-02-18 14:30:43.077 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 14:30:43.077 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_aggregation.sql
+2025-02-18 14:30:43.077 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Count the number of books in the database
+SELECT COUNT(*) AS total_books
+FROM books
+2025-02-18 14:30:43.078 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:30:43.080 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   total_books
+0           21
+
+2025-02-18 14:30:43.081 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Calculate the number of books by each author
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY total_books DESC
+2025-02-18 14:30:43.081 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:30:43.083 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  total_books
+0       J.K.     Rowling            7
+1  Stephenie       Meyer            5
+2     J.R.R.     Tolkien            2
+3        Ray    Bradbury            1
+4     Harper         Lee            1
+5       Jane      Austen            1
+6     Aldous      Huxley            1
+7       J.D.    Salinger            1
+8   F. Scott  Fitzgerald            1
+9       John        Saul            0
+
+2025-02-18 14:30:43.083 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Find the earliest and latest year of publication
+SELECT a.first_name, a.last_name, 
+       MIN(b.year_published) AS earliest_year, 
+       MAX(b.year_published) AS latest_year
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY latest_year DESC
+2025-02-18 14:30:43.084 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:30:43.087 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  earliest_year  latest_year
+0  Stephenie       Meyer         2005.0       2020.0
+1       J.K.     Rowling         1997.0       2007.0
+2     Harper         Lee         1960.0       1960.0
+3     J.R.R.     Tolkien         1937.0       1954.0
+4        Ray    Bradbury         1953.0       1953.0
+5       J.D.    Salinger         1951.0       1951.0
+6     Aldous      Huxley         1932.0       1932.0
+7   F. Scott  Fitzgerald         1925.0       1925.0
+8       Jane      Austen         1813.0       1813.0
+9       John        Saul            NaN          NaN
+
+2025-02-18 14:30:43.087 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Count the number of authors in the database
+SELECT COUNT(*) AS total_authors
+FROM authors
+2025-02-18 14:30:43.088 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:30:43.089 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   total_authors
+0             10
+
+2025-02-18 14:30:43.089 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_filter.sql
+2025-02-18 14:30:43.095 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Filter authors with more than one book
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+HAVING COUNT(b.book_id) > 1
+2025-02-18 14:30:43.096 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:30:43.098 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name last_name  total_books
+0     J.R.R.   Tolkien            2
+1       J.K.   Rowling            7
+2  Stephenie     Meyer            5
+
+2025-02-18 14:30:43.098 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_group_by.sql
+2025-02-18 14:30:43.098 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Group books by author
+SELECT authors.first_name || ' ' || authors.last_name AS author_name, 
+       (SELECT COUNT(*) FROM books WHERE books.author_id = authors.author_id) AS total_books
+FROM authors
+WHERE (SELECT COUNT(*) FROM books WHERE books.author_id = authors.author_id) > 1
+ORDER BY total_books DESC
+2025-02-18 14:30:43.099 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:30:43.100 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+       author_name  total_books
+0     J.K. Rowling            7
+1  Stephenie Meyer            5
+2   J.R.R. Tolkien            2
+
+2025-02-18 14:30:43.100 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_join.sql
+2025-02-18 14:30:43.101 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get books with their authors
+SELECT a.first_name, a.last_name, b.title, b.year_published
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+2025-02-18 14:30:43.102 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:30:43.105 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   first_name   last_name                                      title  year_published
+0      Harper         Lee                      To Kill a Mockingbird          1960.0
+1    F. Scott  Fitzgerald                           The Great Gatsby          1925.0
+2      Aldous      Huxley                            Brave New World          1932.0
+3        J.D.    Salinger                     The Catcher in the Rye          1951.0
+4         Ray    Bradbury                             Fahrenheit 451          1953.0
+5        Jane      Austen                        Pride and Prejudice          1813.0
+6      J.R.R.     Tolkien                                 The Hobbit          1937.0
+7      J.R.R.     Tolkien                      The Lord of the Rings          1954.0
+8        J.K.     Rowling    Harry Potter and the Chamber of Secrets          1998.0
+9        J.K.     Rowling       Harry Potter and the Deathly Hallows          2007.0
+10       J.K.     Rowling        Harry Potter and the Goblet of Fire          2000.0
+11       J.K.     Rowling     Harry Potter and the Half-Blood Prince          2005.0
+12       J.K.     Rowling  Harry Potter and the Order of the Pheonix          2003.0
+13       J.K.     Rowling   Harry Potter and the Prisoner of Azkaban          1999.0
+14       J.K.     Rowling      Harry Potter and the Sorcerer's Stone          1997.0
+15  Stephenie       Meyer                              Breaking Dawn          2008.0
+16  Stephenie       Meyer                                    Eclipse          2007.0
+17  Stephenie       Meyer                               Midnight Sun          2020.0
+18  Stephenie       Meyer                                   New Moon          2006.0
+19  Stephenie       Meyer                                   Twilight          2005.0
+20       John        Saul                                       None             NaN
+
+2025-02-18 14:30:43.105 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get books and their author sorted by year published
+SELECT a.first_name, a.last_name, b.title, b.year_published
+FROM authors a
+JOIN books b ON a.author_id = b.author_id
+ORDER BY b.year_published ASC
+2025-02-18 14:30:43.106 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:30:43.108 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   first_name   last_name                                      title  year_published
+0        Jane      Austen                        Pride and Prejudice            1813
+1    F. Scott  Fitzgerald                           The Great Gatsby            1925
+2      Aldous      Huxley                            Brave New World            1932
+3      J.R.R.     Tolkien                                 The Hobbit            1937
+4        J.D.    Salinger                     The Catcher in the Rye            1951
+5         Ray    Bradbury                             Fahrenheit 451            1953
+6      J.R.R.     Tolkien                      The Lord of the Rings            1954
+7      Harper         Lee                      To Kill a Mockingbird            1960
+8        J.K.     Rowling      Harry Potter and the Sorcerer's Stone            1997
+9        J.K.     Rowling    Harry Potter and the Chamber of Secrets            1998
+10       J.K.     Rowling   Harry Potter and the Prisoner of Azkaban            1999
+11       J.K.     Rowling        Harry Potter and the Goblet of Fire            2000
+12       J.K.     Rowling  Harry Potter and the Order of the Pheonix            2003
+13       J.K.     Rowling     Harry Potter and the Half-Blood Prince            2005
+14  Stephenie       Meyer                                   Twilight            2005
+15  Stephenie       Meyer                                   New Moon            2006
+16       J.K.     Rowling       Harry Potter and the Deathly Hallows            2007
+17  Stephenie       Meyer                                    Eclipse            2007
+18  Stephenie       Meyer                              Breaking Dawn            2008
+19  Stephenie       Meyer                               Midnight Sun            2020
+
+2025-02-18 14:30:43.109 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_sorting.sql
+2025-02-18 14:30:43.114 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get all books ordered by publication year
+SELECT title, year_published
+FROM books
+ORDER BY year_published ASC
+2025-02-18 14:30:43.115 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:30:43.116 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title  year_published
+0                         Pride and Prejudice            1813
+1                            The Great Gatsby            1925
+2                             Brave New World            1932
+3                                  The Hobbit            1937
+4                      The Catcher in the Rye            1951
+5                              Fahrenheit 451            1953
+6                       The Lord of the Rings            1954
+7                       To Kill a Mockingbird            1960
+8       Harry Potter and the Sorcerer's Stone            1997
+9     Harry Potter and the Chamber of Secrets            1998
+10   Harry Potter and the Prisoner of Azkaban            1999
+11        Harry Potter and the Goblet of Fire            2000
+12                                 Nightshade            2000
+13  Harry Potter and the Order of the Pheonix            2003
+14     Harry Potter and the Half-Blood Prince            2005
+15                                   Twilight            2005
+16                                   New Moon            2006
+17       Harry Potter and the Deathly Hallows            2007
+18                                    Eclipse            2007
+19                              Breaking Dawn            2008
+20                               Midnight Sun            2020
+
+2025-02-18 14:30:43.117 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Sort books by author's last name
+SELECT b.title, a.first_name, a.last_name
+FROM books b
+JOIN authors a ON b.author_id = a.author_id
+ORDER BY a.last_name ASC
+2025-02-18 14:30:43.117 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:30:43.120 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title first_name   last_name
+0                         Pride and Prejudice       Jane      Austen
+1                              Fahrenheit 451        Ray    Bradbury
+2                            The Great Gatsby   F. Scott  Fitzgerald
+3                             Brave New World     Aldous      Huxley
+4                       To Kill a Mockingbird     Harper         Lee
+5                                    Twilight  Stephenie       Meyer
+6                                    New Moon  Stephenie       Meyer
+7                                     Eclipse  Stephenie       Meyer
+8                               Breaking Dawn  Stephenie       Meyer
+9                                Midnight Sun  Stephenie       Meyer
+10      Harry Potter and the Sorcerer's Stone       J.K.     Rowling
+11    Harry Potter and the Chamber of Secrets       J.K.     Rowling
+12   Harry Potter and the Prisoner of Azkaban       J.K.     Rowling
+13        Harry Potter and the Goblet of Fire       J.K.     Rowling
+14  Harry Potter and the Order of the Pheonix       J.K.     Rowling
+15     Harry Potter and the Half-Blood Prince       J.K.     Rowling
+16       Harry Potter and the Deathly Hallows       J.K.     Rowling
+17                     The Catcher in the Rye       J.D.    Salinger
+18                                 The Hobbit     J.R.R.     Tolkien
+19                      The Lord of the Rings     J.R.R.     Tolkien
+
+2025-02-18 14:33:49.860 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 14:33:49.861 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_aggregation.sql
+2025-02-18 14:33:49.861 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Count the number of books in the database
+SELECT COUNT(*) AS total_books
+FROM books
+2025-02-18 14:33:49.862 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:33:49.864 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   total_books
+0           21
+
+2025-02-18 14:33:49.864 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Calculate the number of books by each author
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY total_books DESC
+2025-02-18 14:33:49.865 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:33:49.867 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  total_books
+0       J.K.     Rowling            7
+1  Stephenie       Meyer            5
+2     J.R.R.     Tolkien            2
+3        Ray    Bradbury            1
+4     Harper         Lee            1
+5       Jane      Austen            1
+6     Aldous      Huxley            1
+7       J.D.    Salinger            1
+8   F. Scott  Fitzgerald            1
+9       John        Saul            0
+
+2025-02-18 14:33:49.867 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Find the earliest and latest year of publication
+SELECT a.first_name, a.last_name, 
+       MIN(b.year_published) AS earliest_year, 
+       MAX(b.year_published) AS latest_year
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY latest_year DESC
+2025-02-18 14:33:49.868 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:33:49.871 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  earliest_year  latest_year
+0  Stephenie       Meyer         2005.0       2020.0
+1       J.K.     Rowling         1997.0       2007.0
+2     Harper         Lee         1960.0       1960.0
+3     J.R.R.     Tolkien         1937.0       1954.0
+4        Ray    Bradbury         1953.0       1953.0
+5       J.D.    Salinger         1951.0       1951.0
+6     Aldous      Huxley         1932.0       1932.0
+7   F. Scott  Fitzgerald         1925.0       1925.0
+8       Jane      Austen         1813.0       1813.0
+9       John        Saul            NaN          NaN
+
+2025-02-18 14:33:49.871 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Count the number of authors in the database
+SELECT COUNT(*) AS total_authors
+FROM authors
+2025-02-18 14:33:49.872 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:33:49.873 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   total_authors
+0             10
+
+2025-02-18 14:33:49.873 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_filter.sql
+2025-02-18 14:33:49.874 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Filter authors with more than one book
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+HAVING COUNT(b.book_id) > 1
+2025-02-18 14:33:49.874 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:33:49.876 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name last_name  total_books
+0     J.R.R.   Tolkien            2
+1       J.K.   Rowling            7
+2  Stephenie     Meyer            5
+
+2025-02-18 14:33:49.876 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_group_by.sql
+2025-02-18 14:33:49.876 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Group books by author
+SELECT authors.first_name || ' ' || authors.last_name AS author_name, 
+       (SELECT COUNT(*) FROM books WHERE books.author_id = authors.author_id) AS total_books
+FROM authors
+WHERE (SELECT COUNT(*) FROM books WHERE books.author_id = authors.author_id) > 1
+ORDER BY total_books DESC
+2025-02-18 14:33:49.877 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:33:49.878 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+       author_name  total_books
+0     J.K. Rowling            7
+1  Stephenie Meyer            5
+2   J.R.R. Tolkien            2
+
+2025-02-18 14:33:49.878 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_join.sql
+2025-02-18 14:33:49.885 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get books with their authors
+SELECT 
+    a.first_name, 
+    a.last_name, 
+    b.title, 
+    CAST(b.year_published AS INTEGER) AS year_published
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+2025-02-18 14:33:49.887 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:33:49.889 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   first_name   last_name                                      title  year_published
+0      Harper         Lee                      To Kill a Mockingbird          1960.0
+1    F. Scott  Fitzgerald                           The Great Gatsby          1925.0
+2      Aldous      Huxley                            Brave New World          1932.0
+3        J.D.    Salinger                     The Catcher in the Rye          1951.0
+4         Ray    Bradbury                             Fahrenheit 451          1953.0
+5        Jane      Austen                        Pride and Prejudice          1813.0
+6      J.R.R.     Tolkien                                 The Hobbit          1937.0
+7      J.R.R.     Tolkien                      The Lord of the Rings          1954.0
+8        J.K.     Rowling    Harry Potter and the Chamber of Secrets          1998.0
+9        J.K.     Rowling       Harry Potter and the Deathly Hallows          2007.0
+10       J.K.     Rowling        Harry Potter and the Goblet of Fire          2000.0
+11       J.K.     Rowling     Harry Potter and the Half-Blood Prince          2005.0
+12       J.K.     Rowling  Harry Potter and the Order of the Pheonix          2003.0
+13       J.K.     Rowling   Harry Potter and the Prisoner of Azkaban          1999.0
+14       J.K.     Rowling      Harry Potter and the Sorcerer's Stone          1997.0
+15  Stephenie       Meyer                              Breaking Dawn          2008.0
+16  Stephenie       Meyer                                    Eclipse          2007.0
+17  Stephenie       Meyer                               Midnight Sun          2020.0
+18  Stephenie       Meyer                                   New Moon          2006.0
+19  Stephenie       Meyer                                   Twilight          2005.0
+20       John        Saul                                       None             NaN
+
+2025-02-18 14:33:49.890 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get books and their author sorted by year published
+SELECT a.first_name, a.last_name, b.title, b.year_published
+FROM authors a
+JOIN books b ON a.author_id = b.author_id
+ORDER BY b.year_published ASC
+2025-02-18 14:33:49.891 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:33:49.893 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   first_name   last_name                                      title  year_published
+0        Jane      Austen                        Pride and Prejudice            1813
+1    F. Scott  Fitzgerald                           The Great Gatsby            1925
+2      Aldous      Huxley                            Brave New World            1932
+3      J.R.R.     Tolkien                                 The Hobbit            1937
+4        J.D.    Salinger                     The Catcher in the Rye            1951
+5         Ray    Bradbury                             Fahrenheit 451            1953
+6      J.R.R.     Tolkien                      The Lord of the Rings            1954
+7      Harper         Lee                      To Kill a Mockingbird            1960
+8        J.K.     Rowling      Harry Potter and the Sorcerer's Stone            1997
+9        J.K.     Rowling    Harry Potter and the Chamber of Secrets            1998
+10       J.K.     Rowling   Harry Potter and the Prisoner of Azkaban            1999
+11       J.K.     Rowling        Harry Potter and the Goblet of Fire            2000
+12       J.K.     Rowling  Harry Potter and the Order of the Pheonix            2003
+13       J.K.     Rowling     Harry Potter and the Half-Blood Prince            2005
+14  Stephenie       Meyer                                   Twilight            2005
+15  Stephenie       Meyer                                   New Moon            2006
+16       J.K.     Rowling       Harry Potter and the Deathly Hallows            2007
+17  Stephenie       Meyer                                    Eclipse            2007
+18  Stephenie       Meyer                              Breaking Dawn            2008
+19  Stephenie       Meyer                               Midnight Sun            2020
+
+2025-02-18 14:33:49.893 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_sorting.sql
+2025-02-18 14:33:49.893 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get all books ordered by publication year
+SELECT title, year_published
+FROM books
+ORDER BY year_published ASC
+2025-02-18 14:33:49.894 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:33:49.896 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title  year_published
+0                         Pride and Prejudice            1813
+1                            The Great Gatsby            1925
+2                             Brave New World            1932
+3                                  The Hobbit            1937
+4                      The Catcher in the Rye            1951
+5                              Fahrenheit 451            1953
+6                       The Lord of the Rings            1954
+7                       To Kill a Mockingbird            1960
+8       Harry Potter and the Sorcerer's Stone            1997
+9     Harry Potter and the Chamber of Secrets            1998
+10   Harry Potter and the Prisoner of Azkaban            1999
+11        Harry Potter and the Goblet of Fire            2000
+12                                 Nightshade            2000
+13  Harry Potter and the Order of the Pheonix            2003
+14     Harry Potter and the Half-Blood Prince            2005
+15                                   Twilight            2005
+16                                   New Moon            2006
+17       Harry Potter and the Deathly Hallows            2007
+18                                    Eclipse            2007
+19                              Breaking Dawn            2008
+20                               Midnight Sun            2020
+
+2025-02-18 14:33:49.896 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Sort books by author's last name
+SELECT b.title, a.first_name, a.last_name
+FROM books b
+JOIN authors a ON b.author_id = a.author_id
+ORDER BY a.last_name ASC
+2025-02-18 14:33:49.897 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:33:49.899 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title first_name   last_name
+0                         Pride and Prejudice       Jane      Austen
+1                              Fahrenheit 451        Ray    Bradbury
+2                            The Great Gatsby   F. Scott  Fitzgerald
+3                             Brave New World     Aldous      Huxley
+4                       To Kill a Mockingbird     Harper         Lee
+5                                    Twilight  Stephenie       Meyer
+6                                    New Moon  Stephenie       Meyer
+7                                     Eclipse  Stephenie       Meyer
+8                               Breaking Dawn  Stephenie       Meyer
+9                                Midnight Sun  Stephenie       Meyer
+10      Harry Potter and the Sorcerer's Stone       J.K.     Rowling
+11    Harry Potter and the Chamber of Secrets       J.K.     Rowling
+12   Harry Potter and the Prisoner of Azkaban       J.K.     Rowling
+13        Harry Potter and the Goblet of Fire       J.K.     Rowling
+14  Harry Potter and the Order of the Pheonix       J.K.     Rowling
+15     Harry Potter and the Half-Blood Prince       J.K.     Rowling
+16       Harry Potter and the Deathly Hallows       J.K.     Rowling
+17                     The Catcher in the Rye       J.D.    Salinger
+18                                 The Hobbit     J.R.R.     Tolkien
+19                      The Lord of the Rings     J.R.R.     Tolkien
+
+2025-02-18 14:40:44.622 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 14:40:44.623 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_aggregation.sql
+2025-02-18 14:40:44.623 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Count the number of books in the database
+SELECT COUNT(*) AS total_books
+FROM books
+2025-02-18 14:40:44.624 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:40:44.626 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   total_books
+0           21
+
+2025-02-18 14:40:44.626 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Calculate the number of books by each author
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY total_books DESC
+2025-02-18 14:40:44.627 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:40:44.629 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  total_books
+0       J.K.     Rowling            7
+1  Stephenie       Meyer            5
+2     J.R.R.     Tolkien            2
+3        Ray    Bradbury            1
+4     Harper         Lee            1
+5       Jane      Austen            1
+6     Aldous      Huxley            1
+7       J.D.    Salinger            1
+8   F. Scott  Fitzgerald            1
+9       John        Saul            0
+
+2025-02-18 14:40:44.629 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Find the earliest and latest year of publication
+SELECT a.first_name, a.last_name, 
+       MIN(b.year_published) AS earliest_year, 
+       MAX(b.year_published) AS latest_year
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY latest_year DESC
+2025-02-18 14:40:44.630 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:40:44.633 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  earliest_year  latest_year
+0  Stephenie       Meyer         2005.0       2020.0
+1       J.K.     Rowling         1997.0       2007.0
+2     Harper         Lee         1960.0       1960.0
+3     J.R.R.     Tolkien         1937.0       1954.0
+4        Ray    Bradbury         1953.0       1953.0
+5       J.D.    Salinger         1951.0       1951.0
+6     Aldous      Huxley         1932.0       1932.0
+7   F. Scott  Fitzgerald         1925.0       1925.0
+8       Jane      Austen         1813.0       1813.0
+9       John        Saul            NaN          NaN
+
+2025-02-18 14:40:44.633 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Count the number of authors in the database
+SELECT COUNT(*) AS total_authors
+FROM authors
+2025-02-18 14:40:44.634 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:40:44.635 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   total_authors
+0             10
+
+2025-02-18 14:40:44.635 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_filter.sql
+2025-02-18 14:40:44.642 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Filter authors with more than one book
+SELECT 
+    a.first_name, 
+    a.last_name, 
+    (SELECT CAST(MIN(b.year_published) AS INTEGER) FROM books b WHERE b.author_id = a.author_id) AS earliest_year, 
+    (SELECT CAST(MAX(b.year_published) AS INTEGER) FROM books b WHERE b.author_id = a.author_id) AS latest_year
+FROM authors a
+ORDER BY latest_year DESC
+2025-02-18 14:40:44.643 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:40:44.645 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  earliest_year  latest_year
+0  Stephenie       Meyer         2005.0       2020.0
+1       J.K.     Rowling         1997.0       2007.0
+2     Harper         Lee         1960.0       1960.0
+3     J.R.R.     Tolkien         1937.0       1954.0
+4        Ray    Bradbury         1953.0       1953.0
+5       J.D.    Salinger         1951.0       1951.0
+6     Aldous      Huxley         1932.0       1932.0
+7   F. Scott  Fitzgerald         1925.0       1925.0
+8       Jane      Austen         1813.0       1813.0
+9       John        Saul            NaN          NaN
+
+2025-02-18 14:40:44.646 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_group_by.sql
+2025-02-18 14:40:44.646 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Group books by author
+SELECT authors.first_name || ' ' || authors.last_name AS author_name, 
+       (SELECT COUNT(*) FROM books WHERE books.author_id = authors.author_id) AS total_books
+FROM authors
+WHERE (SELECT COUNT(*) FROM books WHERE books.author_id = authors.author_id) > 1
+ORDER BY total_books DESC
+2025-02-18 14:40:44.647 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:40:44.648 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+       author_name  total_books
+0     J.K. Rowling            7
+1  Stephenie Meyer            5
+2   J.R.R. Tolkien            2
+
+2025-02-18 14:40:44.649 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_join.sql
+2025-02-18 14:40:44.653 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get books with their authors
+SELECT books.title, name
+FROM books
+INNER JOIN authors ON books.author_id = authors.author_id
+2025-02-18 14:40:44.654 | ERROR    | __main__:execute_sql_query:28 - Unexpected error: Execution failed on sql '-- Get books with their authors
+SELECT books.title, name
+FROM books
+INNER JOIN authors ON books.author_id = authors.author_id': no such column: name
+2025-02-18 14:40:44.654 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_sorting.sql
+2025-02-18 14:40:44.655 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get all books ordered by publication year
+SELECT title, year_published
+FROM books
+ORDER BY year_published ASC
+2025-02-18 14:40:44.655 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:40:44.657 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title  year_published
+0                         Pride and Prejudice            1813
+1                            The Great Gatsby            1925
+2                             Brave New World            1932
+3                                  The Hobbit            1937
+4                      The Catcher in the Rye            1951
+5                              Fahrenheit 451            1953
+6                       The Lord of the Rings            1954
+7                       To Kill a Mockingbird            1960
+8       Harry Potter and the Sorcerer's Stone            1997
+9     Harry Potter and the Chamber of Secrets            1998
+10   Harry Potter and the Prisoner of Azkaban            1999
+11        Harry Potter and the Goblet of Fire            2000
+12                                 Nightshade            2000
+13  Harry Potter and the Order of the Pheonix            2003
+14     Harry Potter and the Half-Blood Prince            2005
+15                                   Twilight            2005
+16                                   New Moon            2006
+17       Harry Potter and the Deathly Hallows            2007
+18                                    Eclipse            2007
+19                              Breaking Dawn            2008
+20                               Midnight Sun            2020
+
+2025-02-18 14:40:44.657 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Sort books by author's last name
+SELECT b.title, a.first_name, a.last_name
+FROM books b
+JOIN authors a ON b.author_id = a.author_id
+ORDER BY a.last_name ASC
+2025-02-18 14:40:44.658 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:40:44.660 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title first_name   last_name
+0                         Pride and Prejudice       Jane      Austen
+1                              Fahrenheit 451        Ray    Bradbury
+2                            The Great Gatsby   F. Scott  Fitzgerald
+3                             Brave New World     Aldous      Huxley
+4                       To Kill a Mockingbird     Harper         Lee
+5                                    Twilight  Stephenie       Meyer
+6                                    New Moon  Stephenie       Meyer
+7                                     Eclipse  Stephenie       Meyer
+8                               Breaking Dawn  Stephenie       Meyer
+9                                Midnight Sun  Stephenie       Meyer
+10      Harry Potter and the Sorcerer's Stone       J.K.     Rowling
+11    Harry Potter and the Chamber of Secrets       J.K.     Rowling
+12   Harry Potter and the Prisoner of Azkaban       J.K.     Rowling
+13        Harry Potter and the Goblet of Fire       J.K.     Rowling
+14  Harry Potter and the Order of the Pheonix       J.K.     Rowling
+15     Harry Potter and the Half-Blood Prince       J.K.     Rowling
+16       Harry Potter and the Deathly Hallows       J.K.     Rowling
+17                     The Catcher in the Rye       J.D.    Salinger
+18                                 The Hobbit     J.R.R.     Tolkien
+19                      The Lord of the Rings     J.R.R.     Tolkien
+
+2025-02-18 14:45:55.301 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 14:45:55.301 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_aggregation.sql
+2025-02-18 14:45:55.309 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Count the number of books in the database
+SELECT COUNT(*) AS total_books
+FROM books
+2025-02-18 14:45:55.310 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:45:55.313 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   total_books
+0           21
+
+2025-02-18 14:45:55.313 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Calculate the number of books by each author
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY total_books DESC
+2025-02-18 14:45:55.314 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:45:55.316 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  total_books
+0       J.K.     Rowling            7
+1  Stephenie       Meyer            5
+2     J.R.R.     Tolkien            2
+3        Ray    Bradbury            1
+4     Harper         Lee            1
+5       Jane      Austen            1
+6     Aldous      Huxley            1
+7       J.D.    Salinger            1
+8   F. Scott  Fitzgerald            1
+9       John        Saul            0
+
+2025-02-18 14:45:55.316 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Find the earliest and latest year of publication
+SELECT a.first_name, a.last_name, 
+       MIN(b.year_published) AS earliest_year, 
+       MAX(b.year_published) AS latest_year
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY latest_year DESC
+2025-02-18 14:45:55.317 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:45:55.319 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  earliest_year  latest_year
+0  Stephenie       Meyer         2005.0       2020.0
+1       J.K.     Rowling         1997.0       2007.0
+2     Harper         Lee         1960.0       1960.0
+3     J.R.R.     Tolkien         1937.0       1954.0
+4        Ray    Bradbury         1953.0       1953.0
+5       J.D.    Salinger         1951.0       1951.0
+6     Aldous      Huxley         1932.0       1932.0
+7   F. Scott  Fitzgerald         1925.0       1925.0
+8       Jane      Austen         1813.0       1813.0
+9       John        Saul            NaN          NaN
+
+2025-02-18 14:45:55.320 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_filter.sql
+2025-02-18 14:45:55.320 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Filter authors with more than one book
+SELECT 
+    a.first_name, 
+    a.last_name, 
+    (SELECT CAST(MIN(b.year_published) AS INTEGER) FROM books b WHERE b.author_id = a.author_id) AS earliest_year, 
+    (SELECT CAST(MAX(b.year_published) AS INTEGER) FROM books b WHERE b.author_id = a.author_id) AS latest_year
+FROM authors a
+ORDER BY latest_year DESC
+2025-02-18 14:45:55.321 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:45:55.323 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  earliest_year  latest_year
+0  Stephenie       Meyer         2005.0       2020.0
+1       J.K.     Rowling         1997.0       2007.0
+2     Harper         Lee         1960.0       1960.0
+3     J.R.R.     Tolkien         1937.0       1954.0
+4        Ray    Bradbury         1953.0       1953.0
+5       J.D.    Salinger         1951.0       1951.0
+6     Aldous      Huxley         1932.0       1932.0
+7   F. Scott  Fitzgerald         1925.0       1925.0
+8       Jane      Austen         1813.0       1813.0
+9       John        Saul            NaN          NaN
+
+2025-02-18 14:45:55.324 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_group_by.sql
+2025-02-18 14:45:55.329 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Group books by author
+SELECT * FROM books WHERE author_ID = '9e220224-8436-4190-8ad0-e288980693f7'
+2025-02-18 14:45:55.330 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:45:55.332 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                book_id          title  year_published                             author_id        genre
+0  f91447c8-e02b-4563-a163-396c37e5dcc1       Twilight            2005  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+1  cbb39c2d-d69a-4280-aeb6-00d13d746d3f       New Moon            2006  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+2  1f2b6578-d06b-4c90-b44e-f1c212178fd6        Eclipse            2007  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+3  955ac168-f76f-441b-8d93-d0e188c79034  Breaking Dawn            2008  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+4  629a0c8c-17a1-4ca0-83c2-2bafd1efb958   Midnight Sun            2020  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+
+2025-02-18 14:45:55.333 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_join.sql
+2025-02-18 14:45:55.337 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get books with their authors
+SELECT authors.first_name, authors.last_name, books.title
+FROM authors
+INNER JOIN books ON authors.author_id = books.author_id
+2025-02-18 14:45:55.338 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:45:55.340 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   first_name   last_name                                      title
+0      Harper         Lee                      To Kill a Mockingbird
+1    F. Scott  Fitzgerald                           The Great Gatsby
+2      Aldous      Huxley                            Brave New World
+3        J.D.    Salinger                     The Catcher in the Rye
+4         Ray    Bradbury                             Fahrenheit 451
+5        Jane      Austen                        Pride and Prejudice
+6      J.R.R.     Tolkien                                 The Hobbit
+7      J.R.R.     Tolkien                      The Lord of the Rings
+8        J.K.     Rowling      Harry Potter and the Sorcerer's Stone
+9        J.K.     Rowling    Harry Potter and the Chamber of Secrets
+10       J.K.     Rowling   Harry Potter and the Prisoner of Azkaban
+11       J.K.     Rowling        Harry Potter and the Goblet of Fire
+12       J.K.     Rowling  Harry Potter and the Order of the Pheonix
+13       J.K.     Rowling     Harry Potter and the Half-Blood Prince
+14       J.K.     Rowling       Harry Potter and the Deathly Hallows
+15  Stephenie       Meyer                                   Twilight
+16  Stephenie       Meyer                                   New Moon
+17  Stephenie       Meyer                                    Eclipse
+18  Stephenie       Meyer                              Breaking Dawn
+19  Stephenie       Meyer                               Midnight Sun
+
+2025-02-18 14:45:55.341 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_sorting.sql
+2025-02-18 14:45:55.341 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get all books ordered by publication year
+SELECT title, year_published
+FROM books
+ORDER BY year_published ASC
+2025-02-18 14:45:55.342 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:45:55.343 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title  year_published
+0                         Pride and Prejudice            1813
+1                            The Great Gatsby            1925
+2                             Brave New World            1932
+3                                  The Hobbit            1937
+4                      The Catcher in the Rye            1951
+5                              Fahrenheit 451            1953
+6                       The Lord of the Rings            1954
+7                       To Kill a Mockingbird            1960
+8       Harry Potter and the Sorcerer's Stone            1997
+9     Harry Potter and the Chamber of Secrets            1998
+10   Harry Potter and the Prisoner of Azkaban            1999
+11        Harry Potter and the Goblet of Fire            2000
+12                                 Nightshade            2000
+13  Harry Potter and the Order of the Pheonix            2003
+14     Harry Potter and the Half-Blood Prince            2005
+15                                   Twilight            2005
+16                                   New Moon            2006
+17       Harry Potter and the Deathly Hallows            2007
+18                                    Eclipse            2007
+19                              Breaking Dawn            2008
+20                               Midnight Sun            2020
+
+2025-02-18 14:45:55.343 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Sort books by author's last name
+SELECT b.title, a.first_name, a.last_name
+FROM books b
+JOIN authors a ON b.author_id = a.author_id
+ORDER BY a.last_name ASC
+2025-02-18 14:45:55.344 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:45:55.346 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title first_name   last_name
+0                         Pride and Prejudice       Jane      Austen
+1                              Fahrenheit 451        Ray    Bradbury
+2                            The Great Gatsby   F. Scott  Fitzgerald
+3                             Brave New World     Aldous      Huxley
+4                       To Kill a Mockingbird     Harper         Lee
+5                                    Twilight  Stephenie       Meyer
+6                                    New Moon  Stephenie       Meyer
+7                                     Eclipse  Stephenie       Meyer
+8                               Breaking Dawn  Stephenie       Meyer
+9                                Midnight Sun  Stephenie       Meyer
+10      Harry Potter and the Sorcerer's Stone       J.K.     Rowling
+11    Harry Potter and the Chamber of Secrets       J.K.     Rowling
+12   Harry Potter and the Prisoner of Azkaban       J.K.     Rowling
+13        Harry Potter and the Goblet of Fire       J.K.     Rowling
+14  Harry Potter and the Order of the Pheonix       J.K.     Rowling
+15     Harry Potter and the Half-Blood Prince       J.K.     Rowling
+16       Harry Potter and the Deathly Hallows       J.K.     Rowling
+17                     The Catcher in the Rye       J.D.    Salinger
+18                                 The Hobbit     J.R.R.     Tolkien
+19                      The Lord of the Rings     J.R.R.     Tolkien
+
+2025-02-18 14:53:45.843 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 14:53:45.843 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_aggregation.sql
+2025-02-18 14:53:45.849 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Count the number of books in the database
+SELECT COUNT(*) AS total_books
+FROM books
+2025-02-18 14:53:45.851 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:53:45.854 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   total_books
+0           21
+
+2025-02-18 14:53:45.854 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Calculate the number of books by each author
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY total_books DESC
+2025-02-18 14:53:45.855 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:53:45.857 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  total_books
+0       J.K.     Rowling            7
+1  Stephenie       Meyer            5
+2     J.R.R.     Tolkien            2
+3        Ray    Bradbury            1
+4     Harper         Lee            1
+5       Jane      Austen            1
+6     Aldous      Huxley            1
+7       J.D.    Salinger            1
+8   F. Scott  Fitzgerald            1
+9       John        Saul            0
+
+2025-02-18 14:53:45.857 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Find the earliest and latest year of publication
+SELECT 
+    a.first_name, 
+    a.last_name, 
+    CAST(MIN(b.year_published) AS INTEGER) AS earliest_year, 
+    CAST(MAX(b.year_published) AS INTEGER) AS latest_year
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY latest_year DESC
+2025-02-18 14:53:45.858 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:53:45.862 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  earliest_year  latest_year
+0  Stephenie       Meyer         2005.0       2020.0
+1       J.K.     Rowling         1997.0       2007.0
+2     Harper         Lee         1960.0       1960.0
+3     J.R.R.     Tolkien         1937.0       1954.0
+4        Ray    Bradbury         1953.0       1953.0
+5       J.D.    Salinger         1951.0       1951.0
+6     Aldous      Huxley         1932.0       1932.0
+7   F. Scott  Fitzgerald         1925.0       1925.0
+8       Jane      Austen         1813.0       1813.0
+9       John        Saul            NaN          NaN
+
+2025-02-18 14:53:45.863 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_filter.sql
+2025-02-18 14:53:45.869 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Filter authors with more than one book
+SELECT 
+    a.first_name, 
+    a.last_name, 
+    CAST((SELECT MIN(b.year_published) FROM books b WHERE b.author_id = a.author_id) AS INTEGER) AS earliest_year, 
+    CAST((SELECT MAX(b.year_published) FROM books b WHERE b.author_id = a.author_id) AS INTEGER) AS latest_year
+FROM authors a
+ORDER BY latest_year DESC
+2025-02-18 14:53:45.871 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:53:45.874 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  earliest_year  latest_year
+0  Stephenie       Meyer         2005.0       2020.0
+1       J.K.     Rowling         1997.0       2007.0
+2     Harper         Lee         1960.0       1960.0
+3     J.R.R.     Tolkien         1937.0       1954.0
+4        Ray    Bradbury         1953.0       1953.0
+5       J.D.    Salinger         1951.0       1951.0
+6     Aldous      Huxley         1932.0       1932.0
+7   F. Scott  Fitzgerald         1925.0       1925.0
+8       Jane      Austen         1813.0       1813.0
+9       John        Saul            NaN          NaN
+
+2025-02-18 14:53:45.875 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_group_by.sql
+2025-02-18 14:53:45.875 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Group books by author
+SELECT * FROM books WHERE author_ID = '9e220224-8436-4190-8ad0-e288980693f7'
+2025-02-18 14:53:45.877 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:53:45.880 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                book_id          title  year_published                             author_id        genre
+0  f91447c8-e02b-4563-a163-396c37e5dcc1       Twilight            2005  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+1  cbb39c2d-d69a-4280-aeb6-00d13d746d3f       New Moon            2006  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+2  1f2b6578-d06b-4c90-b44e-f1c212178fd6        Eclipse            2007  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+3  955ac168-f76f-441b-8d93-d0e188c79034  Breaking Dawn            2008  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+4  629a0c8c-17a1-4ca0-83c2-2bafd1efb958   Midnight Sun            2020  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+
+2025-02-18 14:53:45.880 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_join.sql
+2025-02-18 14:53:45.881 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get books with their authors
+SELECT authors.first_name, authors.last_name, books.title
+FROM authors
+INNER JOIN books ON authors.author_id = books.author_id
+2025-02-18 14:53:45.882 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:53:45.883 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   first_name   last_name                                      title
+0      Harper         Lee                      To Kill a Mockingbird
+1    F. Scott  Fitzgerald                           The Great Gatsby
+2      Aldous      Huxley                            Brave New World
+3        J.D.    Salinger                     The Catcher in the Rye
+4         Ray    Bradbury                             Fahrenheit 451
+5        Jane      Austen                        Pride and Prejudice
+6      J.R.R.     Tolkien                                 The Hobbit
+7      J.R.R.     Tolkien                      The Lord of the Rings
+8        J.K.     Rowling      Harry Potter and the Sorcerer's Stone
+9        J.K.     Rowling    Harry Potter and the Chamber of Secrets
+10       J.K.     Rowling   Harry Potter and the Prisoner of Azkaban
+11       J.K.     Rowling        Harry Potter and the Goblet of Fire
+12       J.K.     Rowling  Harry Potter and the Order of the Pheonix
+13       J.K.     Rowling     Harry Potter and the Half-Blood Prince
+14       J.K.     Rowling       Harry Potter and the Deathly Hallows
+15  Stephenie       Meyer                                   Twilight
+16  Stephenie       Meyer                                   New Moon
+17  Stephenie       Meyer                                    Eclipse
+18  Stephenie       Meyer                              Breaking Dawn
+19  Stephenie       Meyer                               Midnight Sun
+
+2025-02-18 14:53:45.884 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_sorting.sql
+2025-02-18 14:53:45.884 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get all books ordered by publication year
+SELECT title, year_published
+FROM books
+ORDER BY year_published ASC
+2025-02-18 14:53:45.886 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:53:45.888 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title  year_published
+0                         Pride and Prejudice            1813
+1                            The Great Gatsby            1925
+2                             Brave New World            1932
+3                                  The Hobbit            1937
+4                      The Catcher in the Rye            1951
+5                              Fahrenheit 451            1953
+6                       The Lord of the Rings            1954
+7                       To Kill a Mockingbird            1960
+8       Harry Potter and the Sorcerer's Stone            1997
+9     Harry Potter and the Chamber of Secrets            1998
+10   Harry Potter and the Prisoner of Azkaban            1999
+11        Harry Potter and the Goblet of Fire            2000
+12                                 Nightshade            2000
+13  Harry Potter and the Order of the Pheonix            2003
+14     Harry Potter and the Half-Blood Prince            2005
+15                                   Twilight            2005
+16                                   New Moon            2006
+17       Harry Potter and the Deathly Hallows            2007
+18                                    Eclipse            2007
+19                              Breaking Dawn            2008
+20                               Midnight Sun            2020
+
+2025-02-18 14:53:45.888 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Sort books by author's last name
+SELECT b.title, a.first_name, a.last_name
+FROM books b
+JOIN authors a ON b.author_id = a.author_id
+ORDER BY a.last_name ASC
+2025-02-18 14:53:45.890 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:53:45.892 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title first_name   last_name
+0                         Pride and Prejudice       Jane      Austen
+1                              Fahrenheit 451        Ray    Bradbury
+2                            The Great Gatsby   F. Scott  Fitzgerald
+3                             Brave New World     Aldous      Huxley
+4                       To Kill a Mockingbird     Harper         Lee
+5                                    Twilight  Stephenie       Meyer
+6                                    New Moon  Stephenie       Meyer
+7                                     Eclipse  Stephenie       Meyer
+8                               Breaking Dawn  Stephenie       Meyer
+9                                Midnight Sun  Stephenie       Meyer
+10      Harry Potter and the Sorcerer's Stone       J.K.     Rowling
+11    Harry Potter and the Chamber of Secrets       J.K.     Rowling
+12   Harry Potter and the Prisoner of Azkaban       J.K.     Rowling
+13        Harry Potter and the Goblet of Fire       J.K.     Rowling
+14  Harry Potter and the Order of the Pheonix       J.K.     Rowling
+15     Harry Potter and the Half-Blood Prince       J.K.     Rowling
+16       Harry Potter and the Deathly Hallows       J.K.     Rowling
+17                     The Catcher in the Rye       J.D.    Salinger
+18                                 The Hobbit     J.R.R.     Tolkien
+19                      The Lord of the Rings     J.R.R.     Tolkien
+
+2025-02-18 14:56:01.184 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 14:56:01.185 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_aggregation.sql
+2025-02-18 14:56:01.191 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Count the number of books in the database
+SELECT COUNT(*) AS total_books
+FROM books
+2025-02-18 14:56:01.193 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:56:01.196 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   total_books
+0           21
+
+2025-02-18 14:56:01.196 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Calculate the number of books by each author
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY total_books DESC
+2025-02-18 14:56:01.197 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:56:01.199 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  total_books
+0       J.K.     Rowling            7
+1  Stephenie       Meyer            5
+2     J.R.R.     Tolkien            2
+3        Ray    Bradbury            1
+4     Harper         Lee            1
+5       Jane      Austen            1
+6     Aldous      Huxley            1
+7       J.D.    Salinger            1
+8   F. Scott  Fitzgerald            1
+9       John        Saul            0
+
+2025-02-18 14:56:01.200 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Find the earliest and latest year of publication
+SELECT 
+    a.first_name, 
+    a.last_name, 
+    CAST((SELECT MIN(b.year_published) FROM books b WHERE b.author_id = a.author_id) AS INTEGER) AS earliest_year, 
+    CAST((SELECT MAX(b.year_published) FROM books b WHERE b.author_id = a.author_id) AS INTEGER) AS latest_year
+FROM authors a
+ORDER BY latest_year DESC
+2025-02-18 14:56:01.201 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:56:01.204 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  earliest_year  latest_year
+0  Stephenie       Meyer         2005.0       2020.0
+1       J.K.     Rowling         1997.0       2007.0
+2     Harper         Lee         1960.0       1960.0
+3     J.R.R.     Tolkien         1937.0       1954.0
+4        Ray    Bradbury         1953.0       1953.0
+5       J.D.    Salinger         1951.0       1951.0
+6     Aldous      Huxley         1932.0       1932.0
+7   F. Scott  Fitzgerald         1925.0       1925.0
+8       Jane      Austen         1813.0       1813.0
+9       John        Saul            NaN          NaN
+
+2025-02-18 14:56:01.204 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_filter.sql
+2025-02-18 14:56:01.206 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Filter authors with more than one book
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+HAVING COUNT(b.book_id) > 1
+2025-02-18 14:56:01.207 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:56:01.209 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name last_name  total_books
+0     J.R.R.   Tolkien            2
+1       J.K.   Rowling            7
+2  Stephenie     Meyer            5
+
+2025-02-18 14:56:01.209 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_group_by.sql
+2025-02-18 14:56:01.209 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Group books by author
+SELECT * FROM books WHERE author_ID = '9e220224-8436-4190-8ad0-e288980693f7'
+2025-02-18 14:56:01.211 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:56:01.213 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                book_id          title  year_published                             author_id        genre
+0  f91447c8-e02b-4563-a163-396c37e5dcc1       Twilight            2005  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+1  cbb39c2d-d69a-4280-aeb6-00d13d746d3f       New Moon            2006  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+2  1f2b6578-d06b-4c90-b44e-f1c212178fd6        Eclipse            2007  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+3  955ac168-f76f-441b-8d93-d0e188c79034  Breaking Dawn            2008  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+4  629a0c8c-17a1-4ca0-83c2-2bafd1efb958   Midnight Sun            2020  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+
+2025-02-18 14:56:01.214 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_join.sql
+2025-02-18 14:56:01.214 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get books with their authors
+SELECT authors.first_name, authors.last_name, books.title
+FROM authors
+INNER JOIN books ON authors.author_id = books.author_id
+2025-02-18 14:56:01.215 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:56:01.217 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   first_name   last_name                                      title
+0      Harper         Lee                      To Kill a Mockingbird
+1    F. Scott  Fitzgerald                           The Great Gatsby
+2      Aldous      Huxley                            Brave New World
+3        J.D.    Salinger                     The Catcher in the Rye
+4         Ray    Bradbury                             Fahrenheit 451
+5        Jane      Austen                        Pride and Prejudice
+6      J.R.R.     Tolkien                                 The Hobbit
+7      J.R.R.     Tolkien                      The Lord of the Rings
+8        J.K.     Rowling      Harry Potter and the Sorcerer's Stone
+9        J.K.     Rowling    Harry Potter and the Chamber of Secrets
+10       J.K.     Rowling   Harry Potter and the Prisoner of Azkaban
+11       J.K.     Rowling        Harry Potter and the Goblet of Fire
+12       J.K.     Rowling  Harry Potter and the Order of the Pheonix
+13       J.K.     Rowling     Harry Potter and the Half-Blood Prince
+14       J.K.     Rowling       Harry Potter and the Deathly Hallows
+15  Stephenie       Meyer                                   Twilight
+16  Stephenie       Meyer                                   New Moon
+17  Stephenie       Meyer                                    Eclipse
+18  Stephenie       Meyer                              Breaking Dawn
+19  Stephenie       Meyer                               Midnight Sun
+
+2025-02-18 14:56:01.217 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_sorting.sql
+2025-02-18 14:56:01.218 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get all books ordered by publication year
+SELECT title, year_published
+FROM books
+ORDER BY year_published ASC
+2025-02-18 14:56:01.219 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:56:01.221 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title  year_published
+0                         Pride and Prejudice            1813
+1                            The Great Gatsby            1925
+2                             Brave New World            1932
+3                                  The Hobbit            1937
+4                      The Catcher in the Rye            1951
+5                              Fahrenheit 451            1953
+6                       The Lord of the Rings            1954
+7                       To Kill a Mockingbird            1960
+8       Harry Potter and the Sorcerer's Stone            1997
+9     Harry Potter and the Chamber of Secrets            1998
+10   Harry Potter and the Prisoner of Azkaban            1999
+11        Harry Potter and the Goblet of Fire            2000
+12                                 Nightshade            2000
+13  Harry Potter and the Order of the Pheonix            2003
+14     Harry Potter and the Half-Blood Prince            2005
+15                                   Twilight            2005
+16                                   New Moon            2006
+17       Harry Potter and the Deathly Hallows            2007
+18                                    Eclipse            2007
+19                              Breaking Dawn            2008
+20                               Midnight Sun            2020
+
+2025-02-18 14:56:01.222 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Sort books by author's last name
+SELECT b.title, a.first_name, a.last_name
+FROM books b
+JOIN authors a ON b.author_id = a.author_id
+ORDER BY a.last_name ASC
+2025-02-18 14:56:01.223 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:56:01.224 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title first_name   last_name
+0                         Pride and Prejudice       Jane      Austen
+1                              Fahrenheit 451        Ray    Bradbury
+2                            The Great Gatsby   F. Scott  Fitzgerald
+3                             Brave New World     Aldous      Huxley
+4                       To Kill a Mockingbird     Harper         Lee
+5                                    Twilight  Stephenie       Meyer
+6                                    New Moon  Stephenie       Meyer
+7                                     Eclipse  Stephenie       Meyer
+8                               Breaking Dawn  Stephenie       Meyer
+9                                Midnight Sun  Stephenie       Meyer
+10      Harry Potter and the Sorcerer's Stone       J.K.     Rowling
+11    Harry Potter and the Chamber of Secrets       J.K.     Rowling
+12   Harry Potter and the Prisoner of Azkaban       J.K.     Rowling
+13        Harry Potter and the Goblet of Fire       J.K.     Rowling
+14  Harry Potter and the Order of the Pheonix       J.K.     Rowling
+15     Harry Potter and the Half-Blood Prince       J.K.     Rowling
+16       Harry Potter and the Deathly Hallows       J.K.     Rowling
+17                     The Catcher in the Rye       J.D.    Salinger
+18                                 The Hobbit     J.R.R.     Tolkien
+19                      The Lord of the Rings     J.R.R.     Tolkien
+
+2025-02-18 14:59:34.244 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 14:59:34.244 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_aggregation.sql
+2025-02-18 14:59:34.251 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Count the number of books in the database
+SELECT COUNT(*) AS total_books
+FROM books
+2025-02-18 14:59:34.253 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:59:34.256 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   total_books
+0           21
+
+2025-02-18 14:59:34.257 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Calculate the number of books by each author
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY total_books DESC
+2025-02-18 14:59:34.258 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:59:34.261 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  total_books
+0       J.K.     Rowling            7
+1  Stephenie       Meyer            5
+2     J.R.R.     Tolkien            2
+3        Ray    Bradbury            1
+4     Harper         Lee            1
+5       Jane      Austen            1
+6     Aldous      Huxley            1
+7       J.D.    Salinger            1
+8   F. Scott  Fitzgerald            1
+9       John        Saul            0
+
+2025-02-18 14:59:34.261 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Earliest and Newest Published Book
+SELECT a.first_name, a.last_name, 
+       MIN(b.year_published) AS earliest_year,
+       MAX(b.year_published) AS latest_year
+FROM authors a
+JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY latest_year DESC
+LIMIT 1
+2025-02-18 14:59:34.262 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:59:34.264 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name last_name  earliest_year  latest_year
+0  Stephenie     Meyer           2005         2020
+
+2025-02-18 14:59:34.264 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Median Published Book
+WITH YearRanked AS (
+    SELECT b.year_published
+    FROM books b
+    ORDER BY b.year_published
+),
+Median AS (
+    SELECT year_published,
+           ROW_NUMBER() OVER () AS row_num,
+           COUNT(*) OVER () AS total_rows
+    FROM YearRanked
+)
+SELECT year_published
+FROM Median
+WHERE row_num IN (total_rows / 2, total_rows / 2 + 1)
+LIMIT 1
+2025-02-18 14:59:34.265 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:59:34.267 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   year_published
+0            1998
+
+2025-02-18 14:59:34.267 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_filter.sql
+2025-02-18 14:59:34.268 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Filter authors with more than one book
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+HAVING COUNT(b.book_id) > 1
+2025-02-18 14:59:34.269 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:59:34.271 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name last_name  total_books
+0     J.R.R.   Tolkien            2
+1       J.K.   Rowling            7
+2  Stephenie     Meyer            5
+
+2025-02-18 14:59:34.271 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_group_by.sql
+2025-02-18 14:59:34.271 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Group books by author
+SELECT * FROM books WHERE author_ID = '9e220224-8436-4190-8ad0-e288980693f7'
+2025-02-18 14:59:34.273 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:59:34.276 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                book_id          title  year_published                             author_id        genre
+0  f91447c8-e02b-4563-a163-396c37e5dcc1       Twilight            2005  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+1  cbb39c2d-d69a-4280-aeb6-00d13d746d3f       New Moon            2006  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+2  1f2b6578-d06b-4c90-b44e-f1c212178fd6        Eclipse            2007  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+3  955ac168-f76f-441b-8d93-d0e188c79034  Breaking Dawn            2008  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+4  629a0c8c-17a1-4ca0-83c2-2bafd1efb958   Midnight Sun            2020  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+
+2025-02-18 14:59:34.277 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_join.sql
+2025-02-18 14:59:34.277 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get books with their authors
+SELECT authors.first_name, authors.last_name, books.title
+FROM authors
+INNER JOIN books ON authors.author_id = books.author_id
+2025-02-18 14:59:34.278 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:59:34.281 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   first_name   last_name                                      title
+0      Harper         Lee                      To Kill a Mockingbird
+1    F. Scott  Fitzgerald                           The Great Gatsby
+2      Aldous      Huxley                            Brave New World
+3        J.D.    Salinger                     The Catcher in the Rye
+4         Ray    Bradbury                             Fahrenheit 451
+5        Jane      Austen                        Pride and Prejudice
+6      J.R.R.     Tolkien                                 The Hobbit
+7      J.R.R.     Tolkien                      The Lord of the Rings
+8        J.K.     Rowling      Harry Potter and the Sorcerer's Stone
+9        J.K.     Rowling    Harry Potter and the Chamber of Secrets
+10       J.K.     Rowling   Harry Potter and the Prisoner of Azkaban
+11       J.K.     Rowling        Harry Potter and the Goblet of Fire
+12       J.K.     Rowling  Harry Potter and the Order of the Pheonix
+13       J.K.     Rowling     Harry Potter and the Half-Blood Prince
+14       J.K.     Rowling       Harry Potter and the Deathly Hallows
+15  Stephenie       Meyer                                   Twilight
+16  Stephenie       Meyer                                   New Moon
+17  Stephenie       Meyer                                    Eclipse
+18  Stephenie       Meyer                              Breaking Dawn
+19  Stephenie       Meyer                               Midnight Sun
+
+2025-02-18 14:59:34.281 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_sorting.sql
+2025-02-18 14:59:34.282 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get all books ordered by publication year
+SELECT title, year_published
+FROM books
+ORDER BY year_published ASC
+2025-02-18 14:59:34.284 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:59:34.286 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title  year_published
+0                         Pride and Prejudice            1813
+1                            The Great Gatsby            1925
+2                             Brave New World            1932
+3                                  The Hobbit            1937
+4                      The Catcher in the Rye            1951
+5                              Fahrenheit 451            1953
+6                       The Lord of the Rings            1954
+7                       To Kill a Mockingbird            1960
+8       Harry Potter and the Sorcerer's Stone            1997
+9     Harry Potter and the Chamber of Secrets            1998
+10   Harry Potter and the Prisoner of Azkaban            1999
+11        Harry Potter and the Goblet of Fire            2000
+12                                 Nightshade            2000
+13  Harry Potter and the Order of the Pheonix            2003
+14     Harry Potter and the Half-Blood Prince            2005
+15                                   Twilight            2005
+16                                   New Moon            2006
+17       Harry Potter and the Deathly Hallows            2007
+18                                    Eclipse            2007
+19                              Breaking Dawn            2008
+20                               Midnight Sun            2020
+
+2025-02-18 14:59:34.287 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Sort books by author's last name
+SELECT b.title, a.first_name, a.last_name
+FROM books b
+JOIN authors a ON b.author_id = a.author_id
+ORDER BY a.last_name ASC
+2025-02-18 14:59:34.288 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 14:59:34.290 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title first_name   last_name
+0                         Pride and Prejudice       Jane      Austen
+1                              Fahrenheit 451        Ray    Bradbury
+2                            The Great Gatsby   F. Scott  Fitzgerald
+3                             Brave New World     Aldous      Huxley
+4                       To Kill a Mockingbird     Harper         Lee
+5                                    Twilight  Stephenie       Meyer
+6                                    New Moon  Stephenie       Meyer
+7                                     Eclipse  Stephenie       Meyer
+8                               Breaking Dawn  Stephenie       Meyer
+9                                Midnight Sun  Stephenie       Meyer
+10      Harry Potter and the Sorcerer's Stone       J.K.     Rowling
+11    Harry Potter and the Chamber of Secrets       J.K.     Rowling
+12   Harry Potter and the Prisoner of Azkaban       J.K.     Rowling
+13        Harry Potter and the Goblet of Fire       J.K.     Rowling
+14  Harry Potter and the Order of the Pheonix       J.K.     Rowling
+15     Harry Potter and the Half-Blood Prince       J.K.     Rowling
+16       Harry Potter and the Deathly Hallows       J.K.     Rowling
+17                     The Catcher in the Rye       J.D.    Salinger
+18                                 The Hobbit     J.R.R.     Tolkien
+19                      The Lord of the Rings     J.R.R.     Tolkien
+
+2025-02-18 15:02:01.955 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 15:02:01.955 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_aggregation.sql
+2025-02-18 15:02:01.961 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Count the number of books in the database
+SELECT COUNT(*) AS total_books
+FROM books
+2025-02-18 15:02:01.963 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:02:01.966 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   total_books
+0           21
+
+2025-02-18 15:02:01.966 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Calculate the number of books by each author
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY total_books DESC
+2025-02-18 15:02:01.967 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:02:01.969 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  total_books
+0       J.K.     Rowling            7
+1  Stephenie       Meyer            5
+2     J.R.R.     Tolkien            2
+3        Ray    Bradbury            1
+4     Harper         Lee            1
+5       Jane      Austen            1
+6     Aldous      Huxley            1
+7       J.D.    Salinger            1
+8   F. Scott  Fitzgerald            1
+9       John        Saul            0
+
+2025-02-18 15:02:01.969 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Earliest and Newest Published Book
+SELECT 
+    a.first_name,
+    a.last_name,
+    MIN(b.year_published) AS earliest_year,
+    MAX(b.year_published) AS latest_year
+FROM authors a
+JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY earliest_year ASC, latest_year DESC
+LIMIT 1
+2025-02-18 15:02:01.970 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:02:01.973 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name last_name  earliest_year  latest_year
+0       Jane    Austen           1813         1813
+
+2025-02-18 15:02:01.973 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_filter.sql
+2025-02-18 15:02:01.973 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Filter authors with more than one book
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+HAVING COUNT(b.book_id) > 1
+2025-02-18 15:02:01.974 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:02:01.976 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name last_name  total_books
+0     J.R.R.   Tolkien            2
+1       J.K.   Rowling            7
+2  Stephenie     Meyer            5
+
+2025-02-18 15:02:01.977 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_group_by.sql
+2025-02-18 15:02:01.977 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Group books by author
+SELECT * FROM books WHERE author_ID = '9e220224-8436-4190-8ad0-e288980693f7'
+2025-02-18 15:02:01.978 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:02:01.980 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                book_id          title  year_published                             author_id        genre
+0  f91447c8-e02b-4563-a163-396c37e5dcc1       Twilight            2005  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+1  cbb39c2d-d69a-4280-aeb6-00d13d746d3f       New Moon            2006  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+2  1f2b6578-d06b-4c90-b44e-f1c212178fd6        Eclipse            2007  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+3  955ac168-f76f-441b-8d93-d0e188c79034  Breaking Dawn            2008  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+4  629a0c8c-17a1-4ca0-83c2-2bafd1efb958   Midnight Sun            2020  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+
+2025-02-18 15:02:01.981 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_join.sql
+2025-02-18 15:02:01.981 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get books with their authors
+SELECT authors.first_name, authors.last_name, books.title
+FROM authors
+INNER JOIN books ON authors.author_id = books.author_id
+2025-02-18 15:02:01.983 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:02:01.985 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   first_name   last_name                                      title
+0      Harper         Lee                      To Kill a Mockingbird
+1    F. Scott  Fitzgerald                           The Great Gatsby
+2      Aldous      Huxley                            Brave New World
+3        J.D.    Salinger                     The Catcher in the Rye
+4         Ray    Bradbury                             Fahrenheit 451
+5        Jane      Austen                        Pride and Prejudice
+6      J.R.R.     Tolkien                                 The Hobbit
+7      J.R.R.     Tolkien                      The Lord of the Rings
+8        J.K.     Rowling      Harry Potter and the Sorcerer's Stone
+9        J.K.     Rowling    Harry Potter and the Chamber of Secrets
+10       J.K.     Rowling   Harry Potter and the Prisoner of Azkaban
+11       J.K.     Rowling        Harry Potter and the Goblet of Fire
+12       J.K.     Rowling  Harry Potter and the Order of the Pheonix
+13       J.K.     Rowling     Harry Potter and the Half-Blood Prince
+14       J.K.     Rowling       Harry Potter and the Deathly Hallows
+15  Stephenie       Meyer                                   Twilight
+16  Stephenie       Meyer                                   New Moon
+17  Stephenie       Meyer                                    Eclipse
+18  Stephenie       Meyer                              Breaking Dawn
+19  Stephenie       Meyer                               Midnight Sun
+
+2025-02-18 15:02:01.986 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_sorting.sql
+2025-02-18 15:02:01.986 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get all books ordered by publication year
+SELECT title, year_published
+FROM books
+ORDER BY year_published ASC
+2025-02-18 15:02:01.987 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:02:01.990 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title  year_published
+0                         Pride and Prejudice            1813
+1                            The Great Gatsby            1925
+2                             Brave New World            1932
+3                                  The Hobbit            1937
+4                      The Catcher in the Rye            1951
+5                              Fahrenheit 451            1953
+6                       The Lord of the Rings            1954
+7                       To Kill a Mockingbird            1960
+8       Harry Potter and the Sorcerer's Stone            1997
+9     Harry Potter and the Chamber of Secrets            1998
+10   Harry Potter and the Prisoner of Azkaban            1999
+11        Harry Potter and the Goblet of Fire            2000
+12                                 Nightshade            2000
+13  Harry Potter and the Order of the Pheonix            2003
+14     Harry Potter and the Half-Blood Prince            2005
+15                                   Twilight            2005
+16                                   New Moon            2006
+17       Harry Potter and the Deathly Hallows            2007
+18                                    Eclipse            2007
+19                              Breaking Dawn            2008
+20                               Midnight Sun            2020
+
+2025-02-18 15:02:01.990 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Sort books by author's last name
+SELECT b.title, a.first_name, a.last_name
+FROM books b
+JOIN authors a ON b.author_id = a.author_id
+ORDER BY a.last_name ASC
+2025-02-18 15:02:01.991 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:02:01.993 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title first_name   last_name
+0                         Pride and Prejudice       Jane      Austen
+1                              Fahrenheit 451        Ray    Bradbury
+2                            The Great Gatsby   F. Scott  Fitzgerald
+3                             Brave New World     Aldous      Huxley
+4                       To Kill a Mockingbird     Harper         Lee
+5                                    Twilight  Stephenie       Meyer
+6                                    New Moon  Stephenie       Meyer
+7                                     Eclipse  Stephenie       Meyer
+8                               Breaking Dawn  Stephenie       Meyer
+9                                Midnight Sun  Stephenie       Meyer
+10      Harry Potter and the Sorcerer's Stone       J.K.     Rowling
+11    Harry Potter and the Chamber of Secrets       J.K.     Rowling
+12   Harry Potter and the Prisoner of Azkaban       J.K.     Rowling
+13        Harry Potter and the Goblet of Fire       J.K.     Rowling
+14  Harry Potter and the Order of the Pheonix       J.K.     Rowling
+15     Harry Potter and the Half-Blood Prince       J.K.     Rowling
+16       Harry Potter and the Deathly Hallows       J.K.     Rowling
+17                     The Catcher in the Rye       J.D.    Salinger
+18                                 The Hobbit     J.R.R.     Tolkien
+19                      The Lord of the Rings     J.R.R.     Tolkien
+
+2025-02-18 15:04:51.569 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 15:04:51.569 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_aggregation.sql
+2025-02-18 15:04:51.576 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Count the number of books in the database
+SELECT COUNT(*) AS total_books
+FROM books
+2025-02-18 15:04:51.577 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:04:51.580 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   total_books
+0           21
+
+2025-02-18 15:04:51.580 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Calculate the number of books by each author
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY total_books DESC
+2025-02-18 15:04:51.581 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:04:51.583 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  total_books
+0       J.K.     Rowling            7
+1  Stephenie       Meyer            5
+2     J.R.R.     Tolkien            2
+3        Ray    Bradbury            1
+4     Harper         Lee            1
+5       Jane      Austen            1
+6     Aldous      Huxley            1
+7       J.D.    Salinger            1
+8   F. Scott  Fitzgerald            1
+9       John        Saul            0
+
+2025-02-18 15:04:51.584 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Earliest Published Book
+SELECT 
+    a.first_name,
+    a.last_name,
+    MIN(b.year_published) AS earliest_year,
+FROM authors a
+JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY earliest_year ASC, latest_year DESC
+LIMIT 1
+2025-02-18 15:04:51.584 | ERROR    | __main__:execute_sql_query:28 - Unexpected error: Execution failed on sql '-- Earliest Published Book
+SELECT 
+    a.first_name,
+    a.last_name,
+    MIN(b.year_published) AS earliest_year,
+FROM authors a
+JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY earliest_year ASC, latest_year DESC
+LIMIT 1': near "FROM": syntax error
+2025-02-18 15:04:51.584 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Latest Published Book
+SELECT 
+    a.first_name,
+    a.last_name,
+    MAX(b.year_published) AS earliest_year,
+FROM authors a
+JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY earliest_year ASC, latest_year DESC
+LIMIT 1
+2025-02-18 15:04:51.585 | ERROR    | __main__:execute_sql_query:28 - Unexpected error: Execution failed on sql '-- Latest Published Book
+SELECT 
+    a.first_name,
+    a.last_name,
+    MAX(b.year_published) AS earliest_year,
+FROM authors a
+JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY earliest_year ASC, latest_year DESC
+LIMIT 1': near "FROM": syntax error
+2025-02-18 15:04:51.585 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_filter.sql
+2025-02-18 15:04:51.585 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Filter authors with more than one book
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+HAVING COUNT(b.book_id) > 1
+2025-02-18 15:04:51.586 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:04:51.588 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name last_name  total_books
+0     J.R.R.   Tolkien            2
+1       J.K.   Rowling            7
+2  Stephenie     Meyer            5
+
+2025-02-18 15:04:51.588 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_group_by.sql
+2025-02-18 15:04:51.589 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Group books by author
+SELECT * FROM books WHERE author_ID = '9e220224-8436-4190-8ad0-e288980693f7'
+2025-02-18 15:04:51.590 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:04:51.592 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                book_id          title  year_published                             author_id        genre
+0  f91447c8-e02b-4563-a163-396c37e5dcc1       Twilight            2005  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+1  cbb39c2d-d69a-4280-aeb6-00d13d746d3f       New Moon            2006  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+2  1f2b6578-d06b-4c90-b44e-f1c212178fd6        Eclipse            2007  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+3  955ac168-f76f-441b-8d93-d0e188c79034  Breaking Dawn            2008  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+4  629a0c8c-17a1-4ca0-83c2-2bafd1efb958   Midnight Sun            2020  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+
+2025-02-18 15:04:51.593 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_join.sql
+2025-02-18 15:04:51.593 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get books with their authors
+SELECT authors.first_name, authors.last_name, books.title
+FROM authors
+INNER JOIN books ON authors.author_id = books.author_id
+2025-02-18 15:04:51.594 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:04:51.596 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   first_name   last_name                                      title
+0      Harper         Lee                      To Kill a Mockingbird
+1    F. Scott  Fitzgerald                           The Great Gatsby
+2      Aldous      Huxley                            Brave New World
+3        J.D.    Salinger                     The Catcher in the Rye
+4         Ray    Bradbury                             Fahrenheit 451
+5        Jane      Austen                        Pride and Prejudice
+6      J.R.R.     Tolkien                                 The Hobbit
+7      J.R.R.     Tolkien                      The Lord of the Rings
+8        J.K.     Rowling      Harry Potter and the Sorcerer's Stone
+9        J.K.     Rowling    Harry Potter and the Chamber of Secrets
+10       J.K.     Rowling   Harry Potter and the Prisoner of Azkaban
+11       J.K.     Rowling        Harry Potter and the Goblet of Fire
+12       J.K.     Rowling  Harry Potter and the Order of the Pheonix
+13       J.K.     Rowling     Harry Potter and the Half-Blood Prince
+14       J.K.     Rowling       Harry Potter and the Deathly Hallows
+15  Stephenie       Meyer                                   Twilight
+16  Stephenie       Meyer                                   New Moon
+17  Stephenie       Meyer                                    Eclipse
+18  Stephenie       Meyer                              Breaking Dawn
+19  Stephenie       Meyer                               Midnight Sun
+
+2025-02-18 15:04:51.597 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_sorting.sql
+2025-02-18 15:04:51.597 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get all books ordered by publication year
+SELECT title, year_published
+FROM books
+ORDER BY year_published ASC
+2025-02-18 15:04:51.599 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:04:51.601 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title  year_published
+0                         Pride and Prejudice            1813
+1                            The Great Gatsby            1925
+2                             Brave New World            1932
+3                                  The Hobbit            1937
+4                      The Catcher in the Rye            1951
+5                              Fahrenheit 451            1953
+6                       The Lord of the Rings            1954
+7                       To Kill a Mockingbird            1960
+8       Harry Potter and the Sorcerer's Stone            1997
+9     Harry Potter and the Chamber of Secrets            1998
+10   Harry Potter and the Prisoner of Azkaban            1999
+11        Harry Potter and the Goblet of Fire            2000
+12                                 Nightshade            2000
+13  Harry Potter and the Order of the Pheonix            2003
+14     Harry Potter and the Half-Blood Prince            2005
+15                                   Twilight            2005
+16                                   New Moon            2006
+17       Harry Potter and the Deathly Hallows            2007
+18                                    Eclipse            2007
+19                              Breaking Dawn            2008
+20                               Midnight Sun            2020
+
+2025-02-18 15:04:51.601 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Sort books by author's last name
+SELECT b.title, a.first_name, a.last_name
+FROM books b
+JOIN authors a ON b.author_id = a.author_id
+ORDER BY a.last_name ASC
+2025-02-18 15:04:51.602 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:04:51.605 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title first_name   last_name
+0                         Pride and Prejudice       Jane      Austen
+1                              Fahrenheit 451        Ray    Bradbury
+2                            The Great Gatsby   F. Scott  Fitzgerald
+3                             Brave New World     Aldous      Huxley
+4                       To Kill a Mockingbird     Harper         Lee
+5                                    Twilight  Stephenie       Meyer
+6                                    New Moon  Stephenie       Meyer
+7                                     Eclipse  Stephenie       Meyer
+8                               Breaking Dawn  Stephenie       Meyer
+9                                Midnight Sun  Stephenie       Meyer
+10      Harry Potter and the Sorcerer's Stone       J.K.     Rowling
+11    Harry Potter and the Chamber of Secrets       J.K.     Rowling
+12   Harry Potter and the Prisoner of Azkaban       J.K.     Rowling
+13        Harry Potter and the Goblet of Fire       J.K.     Rowling
+14  Harry Potter and the Order of the Pheonix       J.K.     Rowling
+15     Harry Potter and the Half-Blood Prince       J.K.     Rowling
+16       Harry Potter and the Deathly Hallows       J.K.     Rowling
+17                     The Catcher in the Rye       J.D.    Salinger
+18                                 The Hobbit     J.R.R.     Tolkien
+19                      The Lord of the Rings     J.R.R.     Tolkien
+
+2025-02-18 15:06:38.991 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 15:06:38.992 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_aggregation.sql
+2025-02-18 15:06:38.998 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Count the number of books in the database
+SELECT COUNT(*) AS total_books
+FROM books
+2025-02-18 15:06:38.999 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:06:39.003 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   total_books
+0           21
+
+2025-02-18 15:06:39.003 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Calculate the number of books by each author
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY total_books DESC
+2025-02-18 15:06:39.004 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:06:39.006 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  total_books
+0       J.K.     Rowling            7
+1  Stephenie       Meyer            5
+2     J.R.R.     Tolkien            2
+3        Ray    Bradbury            1
+4     Harper         Lee            1
+5       Jane      Austen            1
+6     Aldous      Huxley            1
+7       J.D.    Salinger            1
+8   F. Scott  Fitzgerald            1
+9       John        Saul            0
+
+2025-02-18 15:06:39.006 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Earliest Published Book
+SELECT title, year_published
+FROM books
+ORDER BY year_published ASC
+LIMIT 1
+2025-02-18 15:06:39.007 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:06:39.009 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                 title  year_published
+0  Pride and Prejudice            1813
+
+2025-02-18 15:06:39.009 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_filter.sql
+2025-02-18 15:06:39.010 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Filter authors with more than one book
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+HAVING COUNT(b.book_id) > 1
+2025-02-18 15:06:39.011 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:06:39.013 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name last_name  total_books
+0     J.R.R.   Tolkien            2
+1       J.K.   Rowling            7
+2  Stephenie     Meyer            5
+
+2025-02-18 15:06:39.014 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_group_by.sql
+2025-02-18 15:06:39.014 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Group books by author
+SELECT * FROM books WHERE author_ID = '9e220224-8436-4190-8ad0-e288980693f7'
+2025-02-18 15:06:39.015 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:06:39.019 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                book_id          title  year_published                             author_id        genre
+0  f91447c8-e02b-4563-a163-396c37e5dcc1       Twilight            2005  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+1  cbb39c2d-d69a-4280-aeb6-00d13d746d3f       New Moon            2006  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+2  1f2b6578-d06b-4c90-b44e-f1c212178fd6        Eclipse            2007  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+3  955ac168-f76f-441b-8d93-d0e188c79034  Breaking Dawn            2008  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+4  629a0c8c-17a1-4ca0-83c2-2bafd1efb958   Midnight Sun            2020  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+
+2025-02-18 15:06:39.019 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_join.sql
+2025-02-18 15:06:39.020 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get books with their authors
+SELECT authors.first_name, authors.last_name, books.title
+FROM authors
+INNER JOIN books ON authors.author_id = books.author_id
+2025-02-18 15:06:39.021 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:06:39.023 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   first_name   last_name                                      title
+0      Harper         Lee                      To Kill a Mockingbird
+1    F. Scott  Fitzgerald                           The Great Gatsby
+2      Aldous      Huxley                            Brave New World
+3        J.D.    Salinger                     The Catcher in the Rye
+4         Ray    Bradbury                             Fahrenheit 451
+5        Jane      Austen                        Pride and Prejudice
+6      J.R.R.     Tolkien                                 The Hobbit
+7      J.R.R.     Tolkien                      The Lord of the Rings
+8        J.K.     Rowling      Harry Potter and the Sorcerer's Stone
+9        J.K.     Rowling    Harry Potter and the Chamber of Secrets
+10       J.K.     Rowling   Harry Potter and the Prisoner of Azkaban
+11       J.K.     Rowling        Harry Potter and the Goblet of Fire
+12       J.K.     Rowling  Harry Potter and the Order of the Pheonix
+13       J.K.     Rowling     Harry Potter and the Half-Blood Prince
+14       J.K.     Rowling       Harry Potter and the Deathly Hallows
+15  Stephenie       Meyer                                   Twilight
+16  Stephenie       Meyer                                   New Moon
+17  Stephenie       Meyer                                    Eclipse
+18  Stephenie       Meyer                              Breaking Dawn
+19  Stephenie       Meyer                               Midnight Sun
+
+2025-02-18 15:06:39.024 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_sorting.sql
+2025-02-18 15:06:39.024 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get all books ordered by publication year
+SELECT title, year_published
+FROM books
+ORDER BY year_published ASC
+2025-02-18 15:06:39.025 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:06:39.028 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title  year_published
+0                         Pride and Prejudice            1813
+1                            The Great Gatsby            1925
+2                             Brave New World            1932
+3                                  The Hobbit            1937
+4                      The Catcher in the Rye            1951
+5                              Fahrenheit 451            1953
+6                       The Lord of the Rings            1954
+7                       To Kill a Mockingbird            1960
+8       Harry Potter and the Sorcerer's Stone            1997
+9     Harry Potter and the Chamber of Secrets            1998
+10   Harry Potter and the Prisoner of Azkaban            1999
+11        Harry Potter and the Goblet of Fire            2000
+12                                 Nightshade            2000
+13  Harry Potter and the Order of the Pheonix            2003
+14     Harry Potter and the Half-Blood Prince            2005
+15                                   Twilight            2005
+16                                   New Moon            2006
+17       Harry Potter and the Deathly Hallows            2007
+18                                    Eclipse            2007
+19                              Breaking Dawn            2008
+20                               Midnight Sun            2020
+
+2025-02-18 15:06:39.028 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Sort books by author's last name
+SELECT b.title, a.first_name, a.last_name
+FROM books b
+JOIN authors a ON b.author_id = a.author_id
+ORDER BY a.last_name ASC
+2025-02-18 15:06:39.029 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:06:39.031 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title first_name   last_name
+0                         Pride and Prejudice       Jane      Austen
+1                              Fahrenheit 451        Ray    Bradbury
+2                            The Great Gatsby   F. Scott  Fitzgerald
+3                             Brave New World     Aldous      Huxley
+4                       To Kill a Mockingbird     Harper         Lee
+5                                    Twilight  Stephenie       Meyer
+6                                    New Moon  Stephenie       Meyer
+7                                     Eclipse  Stephenie       Meyer
+8                               Breaking Dawn  Stephenie       Meyer
+9                                Midnight Sun  Stephenie       Meyer
+10      Harry Potter and the Sorcerer's Stone       J.K.     Rowling
+11    Harry Potter and the Chamber of Secrets       J.K.     Rowling
+12   Harry Potter and the Prisoner of Azkaban       J.K.     Rowling
+13        Harry Potter and the Goblet of Fire       J.K.     Rowling
+14  Harry Potter and the Order of the Pheonix       J.K.     Rowling
+15     Harry Potter and the Half-Blood Prince       J.K.     Rowling
+16       Harry Potter and the Deathly Hallows       J.K.     Rowling
+17                     The Catcher in the Rye       J.D.    Salinger
+18                                 The Hobbit     J.R.R.     Tolkien
+19                      The Lord of the Rings     J.R.R.     Tolkien
+
+2025-02-18 15:11:46.543 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 15:11:46.543 | INFO     | __main__:main:49 - Database operation started.
+2025-02-18 15:11:46.548 | INFO     | __main__:create_database:20 - Tables dropped successfully.
+2025-02-18 15:11:46.554 | INFO     | __main__:create_database:28 - Tables created successfully.
+2025-02-18 15:11:46.564 | INFO     | __main__:insert_data:40 - Data inserted successfully.
+2025-02-18 15:11:46.564 | INFO     | __main__:main:52 - Database operation completed.
+2025-02-18 15:12:02.510 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 15:12:02.511 | INFO     | __main__:main:38 - Starting feature queries execution...
+2025-02-18 15:12:02.511 | INFO     | __main__:main:53 - Connected to database: C:\Projects\datafun-05-sql\project.sqlite3
+2025-02-18 15:12:02.520 | INFO     | __main__:execute_sql_file:28 - Executed: C:\Projects\datafun-05-sql\sql_features\delete_records.sql
+2025-02-18 15:12:02.532 | ERROR    | __main__:execute_sql_file:30 - SQLite error in C:\Projects\datafun-05-sql\sql_features\update_records.sql: table books has no column named genre
+2025-02-18 15:12:02.532 | INFO     | __main__:main:59 - Feature queries execution completed successfully.
+2025-02-18 15:12:02.532 | INFO     | __main__:main:64 - Database connection closed.
+2025-02-18 15:12:41.381 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 15:12:41.381 | INFO     | __main__:main:38 - Starting feature queries execution...
+2025-02-18 15:12:41.383 | INFO     | __main__:main:53 - Connected to database: C:\Projects\datafun-05-sql\project.sqlite3
+2025-02-18 15:12:41.384 | INFO     | __main__:execute_sql_file:28 - Executed: C:\Projects\datafun-05-sql\sql_features\delete_records.sql
+2025-02-18 15:12:41.396 | ERROR    | __main__:execute_sql_file:30 - SQLite error in C:\Projects\datafun-05-sql\sql_features\update_records.sql: UNIQUE constraint failed: authors.author_id
+2025-02-18 15:12:41.397 | INFO     | __main__:main:59 - Feature queries execution completed successfully.
+2025-02-18 15:12:41.397 | INFO     | __main__:main:64 - Database connection closed.
+2025-02-18 15:12:50.103 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 15:12:50.103 | INFO     | __main__:main:49 - Database operation started.
+2025-02-18 15:12:50.108 | INFO     | __main__:create_database:20 - Tables dropped successfully.
+2025-02-18 15:12:50.114 | INFO     | __main__:create_database:28 - Tables created successfully.
+2025-02-18 15:12:50.120 | INFO     | __main__:insert_data:40 - Data inserted successfully.
+2025-02-18 15:12:50.120 | INFO     | __main__:main:52 - Database operation completed.
+2025-02-18 15:12:56.040 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 15:12:56.041 | INFO     | __main__:main:38 - Starting feature queries execution...
+2025-02-18 15:12:56.042 | INFO     | __main__:main:53 - Connected to database: C:\Projects\datafun-05-sql\project.sqlite3
+2025-02-18 15:12:56.049 | INFO     | __main__:execute_sql_file:28 - Executed: C:\Projects\datafun-05-sql\sql_features\delete_records.sql
+2025-02-18 15:12:56.071 | INFO     | __main__:execute_sql_file:28 - Executed: C:\Projects\datafun-05-sql\sql_features\update_records.sql
+2025-02-18 15:12:56.071 | INFO     | __main__:main:59 - Feature queries execution completed successfully.
+2025-02-18 15:12:56.071 | INFO     | __main__:main:64 - Database connection closed.
+2025-02-18 15:13:04.879 | INFO     | utils_logger:<module>:41 - Logging to file: logs\project_log.log
+2025-02-18 15:13:04.880 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_aggregation.sql
+2025-02-18 15:13:04.880 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Count the number of books in the database
+SELECT COUNT(*) AS total_books
+FROM books
+2025-02-18 15:13:04.882 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:13:04.887 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   total_books
+0           21
+
+2025-02-18 15:13:04.887 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Calculate the number of books by each author
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+LEFT JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+ORDER BY total_books DESC
+2025-02-18 15:13:04.889 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:13:04.891 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name   last_name  total_books
+0       J.K.     Rowling            7
+1  Stephenie       Meyer            5
+2     J.R.R.     Tolkien            2
+3        Ray    Bradbury            1
+4     Harper         Lee            1
+5       Jane      Austen            1
+6     Aldous      Huxley            1
+7       J.D.    Salinger            1
+8   F. Scott  Fitzgerald            1
+9       John        Saul            1
+
+2025-02-18 15:13:04.891 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Earliest Published Book
+SELECT title, year_published
+FROM books
+ORDER BY year_published ASC
+LIMIT 1
+2025-02-18 15:13:04.893 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:13:04.895 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                 title  year_published
+0  Pride and Prejudice            1813
+
+2025-02-18 15:13:04.896 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_filter.sql
+2025-02-18 15:13:04.896 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Filter authors with more than one book
+SELECT a.first_name, a.last_name, COUNT(b.book_id) AS total_books
+FROM authors a
+JOIN books b ON a.author_id = b.author_id
+GROUP BY a.author_id
+HAVING COUNT(b.book_id) > 1
+2025-02-18 15:13:04.898 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:13:04.902 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+  first_name last_name  total_books
+0     J.R.R.   Tolkien            2
+1       J.K.   Rowling            7
+2  Stephenie     Meyer            5
+
+2025-02-18 15:13:04.902 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_group_by.sql
+2025-02-18 15:13:04.903 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Group books by author
+SELECT * FROM books WHERE author_ID = '9e220224-8436-4190-8ad0-e288980693f7'
+2025-02-18 15:13:04.904 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:13:04.909 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                book_id          title  year_published                             author_id        genre
+0  f91447c8-e02b-4563-a163-396c37e5dcc1       Twilight            2005  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+1  cbb39c2d-d69a-4280-aeb6-00d13d746d3f       New Moon            2006  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+2  1f2b6578-d06b-4c90-b44e-f1c212178fd6        Eclipse            2007  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+3  955ac168-f76f-441b-8d93-d0e188c79034  Breaking Dawn            2008  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+4  629a0c8c-17a1-4ca0-83c2-2bafd1efb958   Midnight Sun            2020  9e220224-8436-4190-8ad0-e288980693f7  Young Adult
+
+2025-02-18 15:13:04.909 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_join.sql
+2025-02-18 15:13:04.910 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get books with their authors
+SELECT authors.first_name, authors.last_name, books.title
+FROM authors
+INNER JOIN books ON authors.author_id = books.author_id
+2025-02-18 15:13:04.912 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:13:04.919 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+   first_name   last_name                                      title
+0      Harper         Lee                      To Kill a Mockingbird
+1    F. Scott  Fitzgerald                           The Great Gatsby
+2      Aldous      Huxley                            Brave New World
+3        J.D.    Salinger                     The Catcher in the Rye
+4         Ray    Bradbury                             Fahrenheit 451
+5        Jane      Austen                        Pride and Prejudice
+6      J.R.R.     Tolkien                                 The Hobbit
+7      J.R.R.     Tolkien                      The Lord of the Rings
+8        J.K.     Rowling      Harry Potter and the Sorcerer's Stone
+9        J.K.     Rowling    Harry Potter and the Chamber of Secrets
+10       J.K.     Rowling   Harry Potter and the Prisoner of Azkaban
+11       J.K.     Rowling        Harry Potter and the Goblet of Fire
+12       J.K.     Rowling  Harry Potter and the Order of the Pheonix
+13       J.K.     Rowling     Harry Potter and the Half-Blood Prince
+14       J.K.     Rowling       Harry Potter and the Deathly Hallows
+15  Stephenie       Meyer                                   Twilight
+16  Stephenie       Meyer                                   New Moon
+17  Stephenie       Meyer                                    Eclipse
+18  Stephenie       Meyer                              Breaking Dawn
+19  Stephenie       Meyer                               Midnight Sun
+20       John        Saul                                 Nightshade
+
+2025-02-18 15:13:04.920 | INFO     | __main__:execute_queries_from_files:35 - Processing file: query_sorting.sql
+2025-02-18 15:13:04.920 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Get all books ordered by publication year
+SELECT title, year_published
+FROM books
+ORDER BY year_published ASC
+2025-02-18 15:13:04.922 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:13:04.927 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title  year_published
+0                         Pride and Prejudice            1813
+1                            The Great Gatsby            1925
+2                             Brave New World            1932
+3                                  The Hobbit            1937
+4                      The Catcher in the Rye            1951
+5                              Fahrenheit 451            1953
+6                       The Lord of the Rings            1954
+7                       To Kill a Mockingbird            1960
+8       Harry Potter and the Sorcerer's Stone            1997
+9     Harry Potter and the Chamber of Secrets            1998
+10   Harry Potter and the Prisoner of Azkaban            1999
+11        Harry Potter and the Goblet of Fire            2000
+12                                 Nightshade            2000
+13  Harry Potter and the Order of the Pheonix            2003
+14     Harry Potter and the Half-Blood Prince            2005
+15                                   Twilight            2005
+16                                   New Moon            2006
+17       Harry Potter and the Deathly Hallows            2007
+18                                    Eclipse            2007
+19                              Breaking Dawn            2008
+20                               Midnight Sun            2020
+
+2025-02-18 15:13:04.927 | INFO     | __main__:execute_queries_from_files:44 - Executing query: -- Sort books by author's last name
+SELECT b.title, a.first_name, a.last_name
+FROM books b
+JOIN authors a ON b.author_id = a.author_id
+ORDER BY a.last_name ASC
+2025-02-18 15:13:04.930 | INFO     | __main__:execute_sql_query:21 - Query executed successfully.
+2025-02-18 15:13:04.935 | INFO     | __main__:execute_queries_from_files:48 - Query results:
+                                        title first_name   last_name
+0                         Pride and Prejudice       Jane      Austen
+1                              Fahrenheit 451        Ray    Bradbury
+2                            The Great Gatsby   F. Scott  Fitzgerald
+3                             Brave New World     Aldous      Huxley
+4                       To Kill a Mockingbird     Harper         Lee
+5                                    Twilight  Stephenie       Meyer
+6                                    New Moon  Stephenie       Meyer
+7                                     Eclipse  Stephenie       Meyer
+8                               Breaking Dawn  Stephenie       Meyer
+9                                Midnight Sun  Stephenie       Meyer
+10      Harry Potter and the Sorcerer's Stone       J.K.     Rowling
+11    Harry Potter and the Chamber of Secrets       J.K.     Rowling
+12   Harry Potter and the Prisoner of Azkaban       J.K.     Rowling
+13        Harry Potter and the Goblet of Fire       J.K.     Rowling
+14  Harry Potter and the Order of the Pheonix       J.K.     Rowling
+15     Harry Potter and the Half-Blood Prince       J.K.     Rowling
+16       Harry Potter and the Deathly Hallows       J.K.     Rowling
+17                     The Catcher in the Rye       J.D.    Salinger
+18                                 Nightshade       John        Saul
+19                                 The Hobbit     J.R.R.     Tolkien
+20                      The Lord of the Rings     J.R.R.     Tolkien
+

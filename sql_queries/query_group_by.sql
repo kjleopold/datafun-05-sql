@@ -1,6 +1,2 @@
 -- Group books by author
-SELECT authors.first_name || ' ' || authors.last_name AS author_name, 
-       (SELECT COUNT(*) FROM books WHERE books.author_id = authors.author_id) AS total_books
-FROM authors
-WHERE (SELECT COUNT(*) FROM books WHERE books.author_id = authors.author_id) > 1
-ORDER BY total_books DESC;
+SELECT * FROM books WHERE author_ID = '9e220224-8436-4190-8ad0-e288980693f7';

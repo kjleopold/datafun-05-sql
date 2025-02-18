@@ -9,15 +9,8 @@ LEFT JOIN books b ON a.author_id = b.author_id
 GROUP BY a.author_id
 ORDER BY total_books DESC;
 
--- Find the earliest and latest year of publication
-SELECT a.first_name, a.last_name, 
-       MIN(b.year_published) AS earliest_year, 
-       MAX(b.year_published) AS latest_year
-FROM authors a
-LEFT JOIN books b ON a.author_id = b.author_id
-GROUP BY a.author_id
-ORDER BY latest_year DESC;
-
--- Count the number of authors in the database
-SELECT COUNT(*) AS total_authors
-FROM authors;
+-- Earliest Published Book
+SELECT title, year_published
+FROM books
+ORDER BY year_published ASC
+LIMIT 1;

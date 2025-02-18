@@ -10,8 +10,7 @@ VALUES
     ('edd8d71b-80af-4366-a28f-b182df552c91', 'John', 'Saul', 1942);
 
 -- Insert books data
-INSERT INTO books (book_id, title, year_published, author_id, genre)
-VALUES
+INSERT INTO books (book_id, title, year_published, author_id, genre) VALUES
     ('df6263e6-b5df-435a-8811-f0992ea4ef74', 'Harry Potter and the Chamber of Secrets', 1998, '6b693b96-394a-4a1d-a4e2-792a47d7a568', 'Fantasy'),
     ('cfc38c1b-83da-4242-b724-9c198dd397e6', 'Harry Potter and the Prisoner of Azkaban', 1999, '6b693b96-394a-4a1d-a4e2-792a47d7a568', 'Fantasy'),
     ('037f9166-78a9-43ed-8e84-677d5931b3ed', 'Harry Potter and the Goblet of Fire', 2000, '6b693b96-394a-4a1d-a4e2-792a47d7a568', 'Fantasy'),
@@ -23,7 +22,7 @@ VALUES
     ('1f2b6578-d06b-4c90-b44e-f1c212178fd6', 'Eclipse', 2007, '9e220224-8436-4190-8ad0-e288980693f7', 'Young Adult'),
     ('955ac168-f76f-441b-8d93-d0e188c79034', 'Breaking Dawn', 2008, '9e220224-8436-4190-8ad0-e288980693f7', 'Young Adult'),
     ('629a0c8c-17a1-4ca0-83c2-2bafd1efb958', 'Midnight Sun', 2020, '9e220224-8436-4190-8ad0-e288980693f7', 'Young Adult'),
-    ('fcdacee2-b612-4e97-9923-2472d5bfbf4f', 'Nightshade', 2000, 'b0fa7d1e-df1f-483f-99a2-87ff0e98ff9f', 'Horror');
+    ('fcdacee2-b612-4e97-9923-2472d5bfbf4f', 'Nightshade', 2000, 'edd8d71b-80af-4366-a28f-b182df552c91', 'Horror');
 
     
 -- Update the title of a book

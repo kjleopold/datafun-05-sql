@@ -3,11 +3,6 @@ SELECT title, year_published
 FROM books
 ORDER BY year_published ASC;
 
--- Sort books by year published
-SELECT title, year_published
-FROM books
-ORDER BY year_published DESC;
-
 -- Sort books by author's last name
 SELECT b.title, a.first_name, a.last_name
 FROM books b
