@@ -10,7 +10,7 @@ LEFT JOIN books b ON a.author_id = b.author_id
 GROUP BY a.author_id
 ORDER BY total_books DESC;
 
--- Oldest and Newest Published Books
+-- Find oldest and Newest Published Books
 SELECT title, year_published
 FROM books
 WHERE year_published = (SELECT MIN(year_published) FROM books);
