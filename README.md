@@ -50,3 +50,11 @@ Module 5 Project
 4. Ctrl + Shift + P
 5. Search for Python: Select Interpreter.
 6. Select local .venv.
+
+## Schema Design and Database Initialization
+1. Create sql_create folder and .sql scripts
+    * 01_drop_tables.sql - drop tables to restart
+    * 02_create_tables.sql - create your database schema using sql
+    * 03_insert_records.sql - insert at least 10 additional records into each table
+
+2. 
